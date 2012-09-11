@@ -16,6 +16,8 @@ and tools. I put it up here so it's
 right up top and clean.
 *********************/
 
+DEFINE('VERSION', time()); // set an asset version, since we're in development, I use time() here
+
 // we're firing all out initial functions at the start
 add_action('after_setup_theme','bones_ahoy', 15);
 
@@ -114,10 +116,10 @@ function bones_scripts_and_styles() {
   if (!is_admin()) {
   
     // modernizr (without media query polyfill)
-    wp_enqueue_script( 'bones-modernizr', get_stylesheet_directory_uri() . '/assets/js/libs/modernizr.custom.min.js', array(), '2.5.3', false );
+    wp_enqueue_script( 'bones-modernizr', get_stylesheet_directory_uri() . '/assets/js/libs/modernizr.custom.min.js', array(), '2.5.3');
  
     // register main stylesheet
-    wp_enqueue_style( 'bones-stylesheet', get_stylesheet_directory_uri() . '/assets/css/style.css', array(), '', 'all' );
+    wp_enqueue_style( 'bones-stylesheet', get_stylesheet_directory_uri() . '/assets/css/style.css', array(), VERSION, 'all' );
     
     // comment reply script for threaded comments
     if ( is_singular() AND comments_open() AND (get_option('thread_comments') == 1)) {
@@ -125,15 +127,23 @@ function bones_scripts_and_styles() {
     }
     
     // adding scripts file in the footer
-    wp_enqueue_script( 'bones-js', get_stylesheet_directory_uri() . '/assets/js/scripts.js', array( 'jquery' ), '', true );
-    /*
-    I recommend using a plugin to call jQuery
-    using the google cdn. That way it stays cached
-    and your site will load faster.
-    */
-    wp_enqueue_script( 'jquery' ); 
-    
+    wp_enqueue_script( 'bones-js', get_stylesheet_directory_uri() . '/assets/js/scripts.js', array( 'jquery' ), VERSION, true );
   }
+}
+
+// load jquery from cdn and in the footer
+$url = 'http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js'; // the URL to check against
+$test_url = @fopen($url,'r'); // test parameters
+
+if($test_url !== false) { // test if the URL exists
+		wp_deregister_script( 'jquery' ); // deregisters the default WordPress jQuery
+		wp_enqueue_script('jquery', 'http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js', false, '1.7.2', true); // register the external file
+} else {
+	function ds_print_jquery_in_footer( &$scripts) {
+		if ( ! is_admin() )
+			$scripts->add_data( 'jquery', 'group', 1 );
+	}
+	add_action( 'wp_default_scripts', 'ds_print_jquery_in_footer' );
 }
 
 // adding the conditional wrapper around ie stylesheet
