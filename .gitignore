@@ -1,4 +1,5 @@
+*.esproj/
 
-Bones.esproj/user.Eddie.espressostorage
+._*
 
-Bones.esproj/Project.espressostorage
+.DS_Store
