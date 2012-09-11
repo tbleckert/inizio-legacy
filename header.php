@@ -48,7 +48,7 @@
 					
 					
 					<nav role="navigation">
-						<?php bones_main_nav(); // Adjust using Menus in Wordpress Admin ?>
+						<?php Bones::bones_main_nav(); // Adjust using Menus in Wordpress Admin ?>
 					</nav>
 				
 				</div> <!-- end #inner-header -->
