@@ -26,6 +26,38 @@ sidebars, comments, ect.
 require_once('inc/bones.php'); // if you remove this, bones will break
 Bones::ahoy();
 
+$assets = array(
+	array(
+		'do'      => 'enqueue',
+		'type'    => 'script',
+		'handle'  => 'bones-modernizr',
+		'src'     => get_stylesheet_directory_uri() . '/assets/js/libs/modernizr.custom.min.js',
+		'deps'    => false,
+		'version' => '2.5.3'
+	),
+	
+	array(
+		'do'      => 'enqueue',
+		'type'    => 'style',
+		'handle'  => 'bones-stylesheet',
+		'src'     => get_stylesheet_directory_uri() . '/assets/css/style.css',
+		'deps'    => false,
+		'version' => VERSION
+	),
+	
+	array(
+		'do'      => 'enqueue',
+		'type'    => 'script',
+		'handle'  => 'bones-js',
+		'src'     => get_stylesheet_directory_uri() . '/assets/js/scripts.js',
+		'deps'    => array('jquery'),
+		'version' => VERSION,
+		'in_footer' => true
+	),
+);
+
+Bones::assets($assets);
+
 /*
 2. library/custom-post-type.php
     - an example custom post type
