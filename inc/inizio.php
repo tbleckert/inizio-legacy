@@ -40,11 +40,7 @@ class Inizio extends Initial {
 	
 	public function themeSupport($support = array()) {
 		if (is_array($support)) {
-			global $support;
-			
-			function register_theme_support() {
-				global $support;
-				
+			$register_theme_support = function () use ($support) {
 				foreach ($support as $feature => $specific) {
 					if (is_array($specific)) {
 						add_theme_support($feature, $specific);
@@ -52,80 +48,63 @@ class Inizio extends Initial {
 						add_theme_support($feature);
 					}
 				}
-				
-				unset($support);
-			}
+			};
 			
-			add_action('after_setup_theme', 'register_theme_support');
+			add_action('after_setup_theme', $register_theme_support);
 		}
 	}
 	
 	public static function assets(array $assets) {
-		global $assets;
-		
-		add_action('wp_enqueue_scripts', array('Inizio', '_assets'), 999);
-	}
-	
-	public function _assets() {
-		global $assets;
-		
-		if (!is_admin()) {
-			$defaults = array(
-				'do'        => 'register',
-				'type'      => 'script',
-				'in_footer' => false,
-				'deps'      => array(),
-				'version'   => false
-			);
-			
-			foreach($assets as $asset) {
+		$addAssets = function () use ($assets) {
+			if (!is_admin()) {
+				$defaults = array(
+					'do'        => 'register',
+					'type'      => 'script',
+					'in_footer' => false,
+					'deps'      => array(),
+					'version'   => false
+				);
 				
-				if ($asset['type'] == 'script') {
-					if ($asset['do'] == 'enqueue') {
-						wp_enqueue_script( $asset['handle'], $asset['src'], $asset['deps'], $asset['version'], $asset['in_footer']);
+				foreach($assets as $asset) {
+					
+					if ($asset['type'] == 'script') {
+						if ($asset['do'] == 'enqueue') {
+							wp_enqueue_script( $asset['handle'], $asset['src'], $asset['deps'], $asset['version'], $asset['in_footer']);
+						} else {
+							wp_register_script( $asset['handle'], $asset['src'], $asset['deps'], $asset['version'], $asset['in_footer']);
+						}
 					} else {
-						wp_register_script( $asset['handle'], $asset['src'], $asset['deps'], $asset['version'], $asset['in_footer']);
+						if ($asset['do'] == 'enqueue') {
+							wp_enqueue_style( $asset['handle'], $asset['src'], $asset['deps'], $asset['version'], $asset['in_footer']);
+						} else {
+							wp_register_style( $asset['handle'], $asset['src'], $asset['deps'], $asset['version'], $asset['in_footer']);
+						}
 					}
-				} else {
-					if ($asset['do'] == 'enqueue') {
-						wp_enqueue_style( $asset['handle'], $asset['src'], $asset['deps'], $asset['version'], $asset['in_footer']);
-					} else {
-						wp_register_style( $asset['handle'], $asset['src'], $asset['deps'], $asset['version'], $asset['in_footer']);
-					}
+				
 				}
-			
-			}
-			
-			$url = 'http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js'; // the URL to check against
-			$test_url = @fopen($url,'r'); // test parameters
-			
-			if($test_url !== false) { // test if the URL exists
+				
 				wp_deregister_script( 'jquery' ); // deregisters the default WordPress jQuery
 				wp_enqueue_script('jquery', 'http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js', false, '1.7.2', true); // register the external file
-			} else {
-				function ds_print_jquery_in_footer( &$scripts) {
-					if ( ! is_admin() )
-						$scripts->add_data( 'jquery', 'group', 1 );
-				}
-				add_action( 'wp_default_scripts', 'ds_print_jquery_in_footer' );
 			}
-		}
+		};
 		
-		unset($assets);
+		add_action('wp_enqueue_scripts', $addAssets, 999);
+	}
+	
+	public function addMenus($menus) {
+		$register_menus = function () use ($menus) {
+			register_nav_menus($menus);
+		};
+		
+		add_action('after_setup_theme', $register_menus);
 	}
 	
 	public function addImageSizes($sizes) {
 		if (is_array($sizes)) {
-			$labels = array();
-			global $image_sizes;
-			
-			$image_sizes = $sizes;
-			
-			function register_image_sizes() {
-				global $image_sizes;
-				global $labels;	
+			$register_image_sizes = function () use ($sizes) {
+				$labels = array();
 				
-				foreach($image_sizes as $name => $size) {
+				foreach($sizes as $name => $size) {
 					if ($name == 'default') {
 						set_post_thumbnail_size($size['height'], $size['crop']);
 					} else {
@@ -134,21 +113,15 @@ class Inizio extends Initial {
 					}
 				}
 				
-				add_filter('image_size_names_choose', 'image_sizes');
-				
-				function image_sizes($sizes) {
-					global $labels;
-					
+				$image_sizes = function ($sizes) use ($labels) {
 					$newsizes = array_merge($sizes, $labels);
 					return $newsizes;
-					
-					unset($labels);
-				}
-			}
+				};
+				
+				add_filter('image_size_names_choose', $image_sizes);
+			};
 			
-			unset($image_sizes);
-			
-			add_action('after_setup_theme', 'register_image_sizes');
+			add_action('after_setup_theme', $register_image_sizes);
 		}
 	}
 	
@@ -191,18 +164,13 @@ class Inizio extends Initial {
 	// Sidebars & Widgetizes Areas
 	public function addSidebars($addSidebars = array()) {
 		if (is_array($addSidebars)) {
-			global $sidebars;
-			$sidebars = $addSidebars;
-			
-			function register_new_sidebars() {
-				global $sidebars;
-				
-				foreach($sidebars as $sidebar) {
+			$register_new_sidebars = function () use ($addSidebars) {
+				foreach($addSidebars as $sidebar) {
 					register_sidebar($sidebar);
 				}
-			}
+			};
 				
-			add_action('widgets_init', 'register_new_sidebars');
+			add_action('widgets_init', $register_new_sidebars);
 		}
 	}
 	

@@ -96,13 +96,11 @@ $support = array(
 
 Inizio::themeSupport($support);  
 
-// registering wp3+ menus          
-/*register_nav_menus(                      
-	array( 
-		'main-nav' => __( 'The Main Menu', 'iniziotheme' ),   // main nav in header
-		'footer-links' => __( 'Footer Links', 'iniziotheme' ) // secondary nav in footer
-	)
-);*/
+// Add menus
+Inizio::addMenus(array( 
+	'main-nav' => __( 'The Main Menu', 'iniziotheme' ),   // main nav in header
+	'footer-links' => __( 'Footer Links', 'iniziotheme' ) // secondary nav in footer
+));
 
 $sidebars = array(
 	array(
