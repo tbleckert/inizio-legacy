@@ -31,7 +31,7 @@
 			
 			
 			<nav role="navigation">
-				<?php Bones::main_nav(); // Adjust using Menus in Wordpress Admin ?>
+				<?php Inizio::main_nav(); // Adjust using Menus in Wordpress Admin ?>
 			</nav>
 		
 		</header>

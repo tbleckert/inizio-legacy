@@ -8,16 +8,16 @@ and now updated to fit my needs and hopefully yours.
 */
 
 /* Include files */
-require_once('inc/bones.php'); // required
+require_once('inc/inizio.php'); // required
 require_once('inc/custom-post-type.php'); // optional
 
-Bones::ahoy();
+Inizio::ahoy();
 
 $assets = array(
 	array(
 		'do'      => 'enqueue',
 		'type'    => 'script',
-		'handle'  => 'bones-modernizr',
+		'handle'  => 'inizio-modernizr',
 		'src'     => get_stylesheet_directory_uri() . '/assets/js/libs/modernizr.custom.min.js',
 		'deps'    => false,
 		'version' => '2.5.3'
@@ -26,7 +26,7 @@ $assets = array(
 	array(
 		'do'      => 'enqueue',
 		'type'    => 'style',
-		'handle'  => 'bones-stylesheet',
+		'handle'  => 'inizio-stylesheet',
 		'src'     => get_stylesheet_directory_uri() . '/assets/css/style.css',
 		'deps'    => false,
 		'version' => VERSION
@@ -35,7 +35,7 @@ $assets = array(
 	array(
 		'do'      => 'enqueue',
 		'type'    => 'script',
-		'handle'  => 'bones-js',
+		'handle'  => 'inizio-js',
 		'src'     => get_stylesheet_directory_uri() . '/assets/js/scripts.js',
 		'deps'    => array('jquery'),
 		'version' => VERSION,
@@ -43,7 +43,7 @@ $assets = array(
 	),
 );
 
-Bones::assets($assets);
+Inizio::assets($assets);
 
 // Thumbnail sizes
 $image_sizes = array(
@@ -52,14 +52,14 @@ $image_sizes = array(
 		'height' => 125,
 		'crop'   => true
 	),
-	'bones-thumb-600' => array(
-		'label'  => __('Bones Thumb 600', 'bonestheme'),
+	'inizio-thumb-600' => array(
+		'label'  => __('Inizio Thumb 600', 'iniziotheme'),
 		'width'  => 600,
 		'height' => 150,
 		'crop'   => true
 	),
-	'bones-thumb-300' => array(
-		'label'  => __('Bones Thumb 300', 'bonestheme'),
+	'inizio-thumb-300' => array(
+		'label'  => __('Inizio Thumb 300', 'iniziotheme'),
 		'width'  => 300,
 		'height' => 100,
 		'crop'   => true
@@ -67,7 +67,7 @@ $image_sizes = array(
 );
 
 // We use this function to add the image sizes and also to show them in the media box
-Bones::addImageSizes($image_sizes);
+Inizio::addImageSizes($image_sizes);
 
 // Theme features
 $support = array(
@@ -94,13 +94,13 @@ $support = array(
 	'menus'
 );
 
-Bones::themeSupport($support);  
+Inizio::themeSupport($support);  
 
 // registering wp3+ menus          
 /*register_nav_menus(                      
 	array( 
-		'main-nav' => __( 'The Main Menu', 'bonestheme' ),   // main nav in header
-		'footer-links' => __( 'Footer Links', 'bonestheme' ) // secondary nav in footer
+		'main-nav' => __( 'The Main Menu', 'iniziotheme' ),   // main nav in header
+		'footer-links' => __( 'Footer Links', 'iniziotheme' ) // secondary nav in footer
 	)
 );*/
 
@@ -116,6 +116,6 @@ $sidebars = array(
 	)
 );
 
-Bones::addSidebars($sidebars);
+Inizio::addSidebars($sidebars);
 
 ?>

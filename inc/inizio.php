@@ -1,17 +1,18 @@
 <?php
-/* Welcome to Bones :)
-This is the core Bones file where most of the
+
+/* Welcome to Inizio :)
+This is the core Inizio file where most of the
 main functions & features reside. If you have 
 any custom functions, it's best to put them
 in the functions.php file.
 
-Developed by: Eddie Machado
-URL: http://themble.com/bones/
+Developed by: Tobias Bleckert
+URL: http://tbleckert.github.com/inizio/
 */
 
 require_once('initial.php');
 
-class Bones extends Initial {
+class Inizio extends Initial {
 	public static $assetsArr = array();
 
 
@@ -21,20 +22,20 @@ class Bones extends Initial {
 	
 	public function init() {
 		// launching operation cleanup
-    add_action('init', array('Bones', 'head_cleanup'));
+    add_action('init', array('Inizio', 'head_cleanup'));
     // remove WP version from RSS
-    add_filter('the_generator', array('Bones', 'rss_version'));
+    add_filter('the_generator', array('Inizio', 'rss_version'));
     // remove pesky injected css for recent comments widget
-    add_filter( 'wp_head', array('Bones', 'remove_wp_widget_recent_comments_style'), 1);
+    add_filter( 'wp_head', array('Inizio', 'remove_wp_widget_recent_comments_style'), 1);
     // clean up comment styles in the head
-    add_action('wp_head', array('Bones', 'remove_recent_comments_style'), 1);
+    add_action('wp_head', array('Inizio', 'remove_recent_comments_style'), 1);
     // clean up gallery output in wp
-    add_filter('gallery_style', array('Bones', 'gallery_style'));
+    add_filter('gallery_style', array('Inizio', 'gallery_style'));
     
     // cleaning up random code around images
-    add_filter('the_content', array('Bones', 'filter_ptags_on_images'));
+    add_filter('the_content', array('Inizio', 'filter_ptags_on_images'));
     // cleaning up excerpt
-    add_filter('excerpt_more', array('Bones', 'excerpt_more'));
+    add_filter('excerpt_more', array('Inizio', 'excerpt_more'));
 	}
 	
 	public function themeSupport($support = array()) {
@@ -62,7 +63,7 @@ class Bones extends Initial {
 	public static function assets(array $assets) {
 		global $assets;
 		
-		add_action('wp_enqueue_scripts', array('Bones', '_assets'), 999);
+		add_action('wp_enqueue_scripts', array('Inizio', '_assets'), 999);
 	}
 	
 	public function _assets() {
