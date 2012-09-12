@@ -3,9 +3,6 @@
 Author: Tobias Bleckert
 URL: htp://tb-one.se
 
-Original author: Eddie Machado
-URL: htp://themble.com/bones/
-
 This theme was forked from Eddie Machado (https://github.com/eddiemachado/bones) 
 and now updated to fit my needs and hopefully yours.
 */
@@ -50,6 +47,11 @@ Bones::assets($assets);
 
 // Thumbnail sizes
 $image_sizes = array(
+	'default'         => array(
+		'width'  => 125,
+		'height' => 125,
+		'crop'   => true
+	),
 	'bones-thumb-600' => array(
 		'label'  => __('Bones Thumb 600', 'bonestheme'),
 		'width'  => 600,
@@ -66,6 +68,41 @@ $image_sizes = array(
 
 // We use this function to add the image sizes and also to show them in the media box
 Bones::addImageSizes($image_sizes);
+
+// Theme features
+$support = array(
+	'post-thumbnails',
+	'custom-background' => array(
+		'default-image'          => '',  // background image default
+		'default-color'          => '', // background color default (dont add the #)
+		'wp-head-callback'       => '_custom_background_cb',
+		'admin-head-callback'    => '',
+		'admin-preview-callback' => ''
+	),
+	'automatic-feed-links',
+	'post-formats'      => array(
+		'aside',             // title less blurb
+		'gallery',           // gallery of images
+		'link',              // quick link to other site
+		'image',             // an image
+		'quote',             // a quick quote
+		'status',            // a Facebook like status update
+		'video',             // video 
+		'audio',             // audio
+		'chat'               // chat transcript 
+	),
+	'menus'
+);
+
+Bones::themeSupport($support);  
+
+// registering wp3+ menus          
+/*register_nav_menus(                      
+	array( 
+		'main-nav' => __( 'The Main Menu', 'bonestheme' ),   // main nav in header
+		'footer-links' => __( 'Footer Links', 'bonestheme' ) // secondary nav in footer
+	)
+);*/
 
 
 ?>

@@ -31,8 +31,6 @@ class Bones extends Initial {
     // clean up gallery output in wp
     add_filter('gallery_style', array('Bones', 'gallery_style'));
     
-    // launching this stuff after theme setup
-    add_action('after_setup_theme', array('Bones', 'theme_support'));	
     // adding sidebars to Wordpress (these are created in functions.php)
     add_action( 'widgets_init', array('Bones', 'register_sidebars'));
     
@@ -40,6 +38,28 @@ class Bones extends Initial {
     add_filter('the_content', array('Bones', 'filter_ptags_on_images'));
     // cleaning up excerpt
     add_filter('excerpt_more', array('Bones', 'excerpt_more'));
+	}
+	
+	public function themeSupport($support = array()) {
+		if (is_array($support)) {
+			global $support;
+			
+			function register_theme_support() {
+				global $support;
+				
+				foreach ($support as $feature => $specific) {
+					if (is_array($specific)) {
+						add_theme_support($feature, $specific);
+					} else {
+						add_theme_support($feature);
+					}
+				}
+				
+				unset($support);
+			}
+			
+			add_action('after_setup_theme', 'register_theme_support');
+		}
 	}
 	
 	public static function assets(array $assets) {
@@ -99,21 +119,38 @@ class Bones extends Initial {
 	public function addImageSizes($sizes) {
 		if (is_array($sizes)) {
 			$labels = array();
-			global $labels;
+			global $image_sizes;
 			
-			foreach($sizes as $name => $size) {
-				add_image_size($name, $size['width'], $size['height'], $size['crop']);
-				$labels[$name] = $size['label'];
-			}
+			$image_sizes = $sizes;
 			
-			add_filter('image_size_names_choose', 'image_sizes');
-			
-			function image_sizes($sizes) {
-				global $labels;
+			function register_image_sizes() {
+				global $image_sizes;
+				global $labels;	
 				
-				$newsizes = array_merge($sizes, $labels);
-				return $newsizes;
+				foreach($image_sizes as $name => $size) {
+					if ($name == 'default') {
+						set_post_thumbnail_size($size['height'], $size['crop']);
+					} else {
+						add_image_size($name, $size['width'], $size['height'], $size['crop']);
+						$labels[$name] = $size['label'];
+					}
+				}
+				
+				add_filter('image_size_names_choose', 'image_sizes');
+				
+				function image_sizes($sizes) {
+					global $labels;
+					
+					$newsizes = array_merge($sizes, $labels);
+					return $newsizes;
+					
+					unset($labels);
+				}
 			}
+			
+			unset($image_sizes);
+			
+			add_action('after_setup_theme', 'register_image_sizes');
 		}
 	}
 	
