@@ -10,7 +10,10 @@ keep it organized. I find it easier to edit
 and change things if they are concentrated
 in their own file.
 
-Developed by: Eddie Machado
+Developed by: Tobias Bleckert
+URL: http://tb-one.se
+
+Originaly developed by: Eddie Machado
 URL: http://themble.com/bones/
 */
 
