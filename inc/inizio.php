@@ -138,4 +138,19 @@ class Inizio extends Initial {
 		}
 	}
 	
+	public function customizeLogin($css = get_stylesheet_directory_uri() . '/library/css/login.css') {
+		function bones_login_css() {
+			echo '<link rel="stylesheet" href="' .$css. '">';
+		}
+		
+		function bones_login_url() {  return home_url(); }
+		
+		function bones_login_title() { return get_option('blogname'); }
+		
+		// calling it only on the login page
+		add_action('login_head', 'bones_login_css');
+		add_filter('login_headerurl', 'bones_login_url');
+		add_filter('login_headertitle', 'bones_login_title');
+	}
+	
 }
