@@ -1,19 +1,13 @@
-			<footer class="footer" role="contentinfo">
+		<footer class="footer" role="contentinfo">
+				
+				<nav role="navigation">
+  					<?php Bones::footer_links(); // Adjust using Menus in Wordpress Admin ?>
+                </nav>
+                		
+				<p class="attribution">&copy; <?php echo date('Y'); ?> <?php bloginfo('name'); ?>.</p>
 			
-				<div id="inner-footer" class="wrap clearfix">
-					
-					<nav role="navigation">
-    					<?php Bones::footer_links(); // Adjust using Menus in Wordpress Admin ?>
-	                </nav>
-	                		
-					<p class="attribution">&copy; <?php echo date('Y'); ?> <?php bloginfo('name'); ?>.</p>
-				
-				</div> <!-- end #inner-footer -->
-				
-			</footer> <!-- end footer -->
-		
-		</div> <!-- end #container -->
-		
+		</footer> <!-- end footer -->
+	
 		<?php wp_footer(); // js scripts are inserted using this function ?>
 
 	</body>
