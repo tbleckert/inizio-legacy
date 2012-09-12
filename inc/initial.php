@@ -44,16 +44,6 @@ class Initial {
 	public function gallery_style($css) {
 	  return preg_replace("!<style type='text/css'>(.*?)</style>!s", '', $css);
 	}
-	 
-	// this is the fallback for header menu
-	public function main_nav_fallback() { 
-		wp_page_menu( 'show_home=Home' ); 
-	}
-	
-	// this is the fallback for footer menu
-	public function footer_links_fallback() { 
-		/* you can put a default here if you like */ 
-	}
 	
 	/* http://wp-snippets.com/pagination-without-plugin/ */
 	public function pagination($prev = '«', $next = '»') {
