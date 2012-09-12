@@ -31,9 +31,6 @@ class Bones extends Initial {
     // clean up gallery output in wp
     add_filter('gallery_style', array('Bones', 'gallery_style'));
     
-    // adding sidebars to Wordpress (these are created in functions.php)
-    add_action( 'widgets_init', array('Bones', 'register_sidebars'));
-    
     // cleaning up random code around images
     add_filter('the_content', array('Bones', 'filter_ptags_on_images'));
     // cleaning up excerpt
@@ -175,19 +172,37 @@ class Bones extends Initial {
 	// the footer menu (should you choose to use one)
 	public function footer_links() { 
 		// display the wp3 menu if available
-	    wp_nav_menu(array( 
-	    	'container' => '',                              // remove nav container
-	    	'container_class' => 'footer-links clearfix',   // class of container (should you choose to use it)
-	    	'menu' => 'Footer Links',                       // nav name
-	    	'menu_class' => 'nav footer-nav clearfix',      // adding custom nav class
-	    	'theme_location' => 'footer-links',             // where it's located in the theme
-	    	'before' => '',                                 // before the menu
-	        'after' => '',                                  // after the menu
-	        'link_before' => '',                            // before each link
-	        'link_after' => '',                             // after each link
-	        'depth' => 0,                                   // limit the depth of the nav
-	    	'fallback_cb' => 'footer_links_fallback'  // fallback function
+    wp_nav_menu(array( 
+    	'container' => '',                              // remove nav container
+    	'container_class' => 'footer-links clearfix',   // class of container (should you choose to use it)
+    	'menu' => 'Footer Links',                       // nav name
+    	'menu_class' => 'nav footer-nav clearfix',      // adding custom nav class
+    	'theme_location' => 'footer-links',             // where it's located in the theme
+    	'before' => '',                                 // before the menu
+      'after' => '',                                  // after the menu
+      'link_before' => '',                            // before each link
+      'link_after' => '',                             // after each link
+      'depth' => 0,                                   // limit the depth of the nav
+    	'fallback_cb' => 'footer_links_fallback'        // fallback function
 		));
+	}
+	
+	// Sidebars & Widgetizes Areas
+	public function addSidebars($addSidebars = array()) {
+		if (is_array($addSidebars)) {
+			global $sidebars;
+			$sidebars = $addSidebars;
+			
+			function register_new_sidebars() {
+				global $sidebars;
+				
+				foreach($sidebars as $sidebar) {
+					register_sidebar($sidebar);
+				}
+			}
+				
+			add_action('widgets_init', 'register_new_sidebars');
+		}
 	}
 	
 }
