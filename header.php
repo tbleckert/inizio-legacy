@@ -10,47 +10,31 @@
 		
 		<title><?php wp_title(''); ?></title>
 		
-		<!-- Google Chrome Frame for IE -->
-		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-		
-		<!-- mobile meta (hooray!) -->
-		<meta name="HandheldFriendly" content="True">
-		<meta name="MobileOptimized" content="320">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 		
-		<!-- icons & favicons (for more: http://themble.com/support/adding-icons-favicons/) -->
-		<link rel="shortcut icon" href="<?php echo get_template_directory_uri(); ?>/favicon.ico">
-				
-  		<link rel="pingback" href="<?php bloginfo('pingback_url'); ?>">
+  	<link rel="pingback" href="<?php bloginfo('pingback_url'); ?>">
 		
 		<!-- wordpress head functions -->
 		<?php wp_head(); ?>
-		<!-- end of wordpress head -->
-			
-		<!-- drop Google Analytics Here -->
-		<!-- end analytics -->
-		
+		<!-- end of wordpress head -->		
 	</head>
 	
 	<body <?php body_class(); ?>>
 	
-		<div id="container">
+		<header class="header" role="banner">
+		
+			<?php if(is_home()): ?>
+			<h1><?php bloginfo('name'); ?></h1>
+			<?php else: ?>
+			<div class="logo"><a href="<?php echo home_url(); ?>" rel="nofollow"><?php bloginfo('name'); ?></a></div>
+			<?php endif; ?>
 			
-			<header class="header" role="banner">
+			<!-- if you'd like to use the site description you can un-comment it below -->
+			<?php // bloginfo('description'); ?>
 			
-				<div id="inner-header" class="wrap clearfix">
-					
-					<!-- to use a image just replace the bloginfo('name') with your img src and remove the surrounding <p> -->
-					<p id="logo" class="h1"><a href="<?php echo home_url(); ?>" rel="nofollow"><?php bloginfo('name'); ?></a></p>
-					
-					<!-- if you'd like to use the site description you can un-comment it below -->
-					<?php // bloginfo('description'); ?>
-					
-					
-					<nav role="navigation">
-						<?php Bones::main_nav(); // Adjust using Menus in Wordpress Admin ?>
-					</nav>
-				
-				</div> <!-- end #inner-header -->
 			
-			</header> <!-- end header -->
+			<nav role="navigation">
+				<?php Bones::main_nav(); // Adjust using Menus in Wordpress Admin ?>
+			</nav>
+		
+		</header>
