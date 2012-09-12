@@ -9,13 +9,6 @@ Developed by: Eddie Machado
 URL: http://themble.com/bones/
 */
 
-/*********************
-LAUNCH BONES
-Let's fire off all the functions
-and tools. I put it up here so it's
-right up top and clean.
-*********************/
-
 require_once('initial.php');
 
 class Bones extends Initial {
@@ -103,25 +96,46 @@ class Bones extends Initial {
 		}
 		
 		unset($assets);
-	} 
+	}
+	
+	public function addImageSizes($sizes) {
+		if (is_array($sizes)) {
+			$labels = array();
+			global $labels;
+			
+			foreach($sizes as $name => $size) {
+				add_image_size($name, $size['width'], $size['height'], $size['crop']);
+				$labels[$name] = $size['label'];
+			}
+			
+			add_filter('image_size_names_choose', 'image_sizes');
+			
+			function image_sizes($sizes) {
+				global $labels;
+				
+				$newsizes = array_merge($sizes, $labels);
+				return $newsizes;
+			}
+		}
+	}
 	
 	// the main menu 
 	public function main_nav() {
 		// display the wp3 menu if available
-	    wp_nav_menu(array( 
-	    	'container' => false,                           // remove nav container
-	    	'container_class' => 'menu clearfix',           // class of container (should you choose to use it)
-	    	'menu' => 'The Main Menu',                      // nav name
-	    	'menu_class' => 'nav top-nav clearfix',         // adding custom nav class
-	    	'theme_location' => 'main-nav',                 // where it's located in the theme
-	    	'before' => '',                                 // before the menu
-	        'after' => '',                                  // after the menu
-	        'link_before' => '',                            // before each link
-	        'link_after' => '',                             // after each link
-	        'depth' => 0,                                   // limit the depth of the nav
-	    	'fallback_cb' => 'main_nav_fallback'      // fallback function
+		wp_nav_menu(array( 
+			'container'       => false,                  // remove nav container
+			'container_class' => 'menu clearfix',        // class of container (should you choose to use it)
+			'menu'            => 'The Main Menu',        // nav name
+			'menu_class'      => 'nav top-nav clearfix', // adding custom nav class
+			'theme_location'  => 'main-nav',             // where it's located in the theme
+			'before'          => '',                     // before the menu
+			'after'           => '',                     // after the menu
+			'link_before'     => '',                     // before each link
+			'link_after'      => '',                     // after each link
+			'depth'           => 0,                      // limit the depth of the nav
+			'fallback_cb'     => 'main_nav_fallback'     // fallback function
 		));
-	} /* end bones main nav */
+	}
 	
 	// the footer menu (should you choose to use one)
 	public function footer_links() { 
@@ -139,6 +153,6 @@ class Bones extends Initial {
 	        'depth' => 0,                                   // limit the depth of the nav
 	    	'fallback_cb' => 'footer_links_fallback'  // fallback function
 		));
-	} /* end bones footer link */
+	}
 	
 }

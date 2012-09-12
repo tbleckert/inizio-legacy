@@ -49,8 +49,23 @@ $assets = array(
 Bones::assets($assets);
 
 // Thumbnail sizes
-add_image_size( 'bones-thumb-600', 600, 150, true );
-add_image_size( 'bones-thumb-300', 300, 100, true );
+$image_sizes = array(
+	'bones-thumb-600' => array(
+		'label'  => __('Bones Thumb 600', 'bonestheme'),
+		'width'  => 600,
+		'height' => 150,
+		'crop'   => true
+	),
+	'bones-thumb-300' => array(
+		'label'  => __('Bones Thumb 300', 'bonestheme'),
+		'width'  => 300,
+		'height' => 100,
+		'crop'   => true
+	)
+);
+
+// We use this function to add the image sizes and also to show them in the media box
+Bones::addImageSizes($image_sizes);
 
 
 ?>
