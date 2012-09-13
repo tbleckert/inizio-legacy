@@ -263,6 +263,17 @@ class Inizio extends Initial {
 		}
 	}
 	
+	/**
+	 * Add sidebars
+	 *
+	 * Use this to register sidebars.
+	 * It's just a wrapper so that you don't have to call add_action yourself.
+	 *
+	 * @param  array
+	 * @author Tobias Bleckert <tbleckert@gmail.com>
+	 * @link   http://codex.wordpress.org/Function_Reference/register_sidebar
+	 */
+	
 	public function addSidebars($addSidebars = array()) {
 		if (is_array($addSidebars)) {
 			$register_new_sidebars = function () use ($addSidebars) {
@@ -274,6 +285,16 @@ class Inizio extends Initial {
 			add_action('widgets_init', $register_new_sidebars);
 		}
 	}
+	
+	/**
+	 * Customize Login
+	 *
+	 * Function to let you customize the login page.
+	 * Simply call this function with the link to a css file as a parameter
+	 *
+	 * @param string
+	 * @author Eddie Machado <http://themble.com>
+   */
 	
 	public function customizeLogin($css = get_stylesheet_directory_uri() . '/library/css/login.css') {
 		function bones_login_css() {
