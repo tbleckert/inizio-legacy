@@ -296,7 +296,7 @@ class Inizio extends Initial {
 	 * @author Eddie Machado <http://themble.com>
    */
 	
-	public function customizeLogin($css = get_stylesheet_directory_uri() . '/library/css/login.css') {
+	public function customizeLogin($css) {
 		function bones_login_css() {
 			echo '<link rel="stylesheet" href="' .$css. '">';
 		}

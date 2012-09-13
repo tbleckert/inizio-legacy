@@ -11,6 +11,8 @@ and now updated to fit my needs and hopefully yours.
 require_once('inc/inizio.php'); // required
 require_once('inc/custom-post-type.php'); // optional
 
+define('VERSION', time()); // Change this to your asset version (you can use time() when developing)
+
 Inizio::ahoy();
 
 $assets = array(
