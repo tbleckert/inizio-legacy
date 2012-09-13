@@ -1,25 +1,46 @@
 <?php
 
-/* Welcome to Inizio :)
-This is the core Inizio file where most of the
-main functions & features reside. If you have 
-any custom functions, it's best to put them
-in the functions.php file.
+/**
+ * The heart of Inizio
+ *
+ * This is a collection of useful functions to use in your wordpress theme.
+ * You should not add theme specific functions to this class.
+ * Make yourself a new class with the name of your theme and add your functions there.
+ *
+ * If you miss a function that you feel is general, add it here.
+ * Also, if you like to share it you can either contact me or fork this project and make a pull request with your newly added function.
+ *
+ * @author  Tobias Bleckert <tbleckert@gmail.com>
+ * @author  Eddie Machado <http://themble.com>
+ * @version 1.0
+ */
 
-Developed by: Tobias Bleckert
-URL: http://tbleckert.github.com/inizio/
-*/
-
+// Include init functions
 require_once('initial.php');
 
 class Inizio extends Initial {
-	public static $assetsArr = array();
 
-
+  /**
+   * ahoy
+   *
+   * This function should be called in your functions.php.
+   * This function will clean up wordpress and is recomended to use
+   *
+   * @author Eddie Machado <http://themble.com>
+   */
+   
 	public function ahoy() {
 		add_action('after_setup_theme', self::init(), 15);
 	}
 	
+	/**
+	 * init
+	 *
+	 * Called by ahoy and should not be called directly
+	 *
+	 * @author Eddie Machado <http://themble.com>
+	 */
+	 
 	public function init() {
 		// launching operation cleanup
     add_action('init', array('Inizio', 'head_cleanup'));
@@ -38,6 +59,36 @@ class Inizio extends Initial {
     add_filter('excerpt_more', array('Inizio', 'excerpt_more'));
 	}
 	
+	/**
+	 * Theme Support
+	 *
+	 * A handy wrapper to add theme supports via add_theme_support
+	 * Call it like this
+	 *
+	 *    $support = array(
+   *   	 	'post-thumbnails',
+   *   	 	'automatic-feed-links',
+   *   	 	'post-formats'      => array(
+   *   	 		'aside',             // title less blurb
+   *   	 		'gallery',           // gallery of images
+   *   	 		'link',              // quick link to other site
+   *   	 		'image',             // an image
+   *   	 		'quote',             // a quick quote
+   *   	 		'status',            // a Facebook like status update
+   *  	 		'video',             // video 
+   *   	 		'audio',             // audio
+   *   	 		'chat'               // chat transcript 
+   *   	 	),
+   *   	 	'menus'
+   *   	);
+   *
+   *    Inizio::themeSupport($support)
+   *
+   * @param  array see accepted input by visiting the link
+   * @author Tobias Bleckert <tbleckert@gmail.com>
+   * @link   http://codex.wordpress.org/Function_Reference/add_theme_support
+	 */
+	
 	public function themeSupport($support = array()) {
 		if (is_array($support)) {
 			$register_theme_support = function () use ($support) {
@@ -54,6 +105,45 @@ class Inizio extends Initial {
 		}
 	}
 	
+	/**
+	 * Assets
+	 *
+	 * This little function handles all your assets
+	 * Call it like this
+	 *
+	 *    $assets = array(
+   *  	 	array(
+   *   	 		'do'      => 'enqueue',
+   *   	 		'type'    => 'style',
+   *   	 		'handle'  => 'inizio-stylesheet',
+   *   	 		'src'     => get_stylesheet_directory_uri() . '/assets/css/style.css',
+   *   	 		'deps'    => false,
+   *   	 		'version' => VERSION
+   *   	 	),
+   *   	 	array(
+   *   	 		'do'      => 'enqueue',
+   *   	 		'type'    => 'script',
+   *   	 		'handle'  => 'inizio-js',
+   *   	 		'src'     => get_stylesheet_directory_uri() . '/assets/js/scripts.js',
+   *   	 		'deps'    => array('jquery'),
+   *   	 		'version' => VERSION,
+   *   	 		'in_footer' => true
+   *   	 	),
+   *   	 );
+   *   	 
+   *   	 Inizio::assets($assets);
+	 *
+	 * @param  array
+	 *
+	 *         possible values:
+	 *         - do:   register | enqueue (default register)
+	 *         - type: script | style (default script)
+	 *
+	 *         - and all attributes listed in the link
+	 * @author Tobias Bleckert <tbleckert@gmail.com>
+	 * @link   http://codex.wordpress.org/Function_Reference/wp_enqueue_script
+	 */
+	
 	public static function assets(array $assets) {
 		$addAssets = function () use ($assets) {
 			if (!is_admin()) {
@@ -66,6 +156,7 @@ class Inizio extends Initial {
 				);
 				
 				foreach($assets as $asset) {
+				  $asset = array_replace($defaults, $asset);
 					
 					if ($asset['type'] == 'script') {
 						if ($asset['do'] == 'enqueue') {
@@ -91,6 +182,16 @@ class Inizio extends Initial {
 		add_action('wp_enqueue_scripts', $addAssets, 999);
 	}
 	
+	/**
+	 * Add menus
+	 *
+	 * A simple function to simplify adding menus.
+	 *
+	 * @param  array
+	 * @author Tobias Bleckert <tbleckert@gmail.com>
+	 * @link   http://codex.wordpress.org/Function_Reference/register_nav_menus
+	 */
+	
 	public function addMenus($menus) {
 		$register_menus = function () use ($menus) {
 			register_nav_menus($menus);
@@ -98,6 +199,43 @@ class Inizio extends Initial {
 		
 		add_action('after_setup_theme', $register_menus);
 	}
+	
+	/**
+	 * Add image sizes
+	 *
+	 * Handles the adding of custom image sizes.
+	 * You can specify the default thumbnail size and custom sizes.
+	 * This function will also add those sizes to the admin media box.
+	 *
+	 * Use it like this
+	 *
+   *   	 $image_sizes = array(
+   *   	 	'default'         => array(
+   *   	 		'width'  => 125,
+   *   	 		'height' => 125,
+   *   	 		'crop'   => true
+   *   	 	),
+   *   	 	'inizio-thumb-600' => array(
+   *   	 		'label'  => __('Inizio Thumb 600', 'iniziotheme'),
+   *   	 		'width'  => 600,
+   *   	 		'height' => 150,
+   *   	 		'crop'   => true
+   *   	 	),
+   *   	 	'inizio-thumb-300' => array(
+   *  	 		'label'  => __('Inizio Thumb 300', 'iniziotheme'),
+   *   	 		'width'  => 300,
+   *   	 		'height' => 100,
+   *   	 		'crop'   => true
+   *   	 	)
+   *   	 );
+   *   	 
+   *   	 Inizio::addImageSizes($image_sizes);
+   *
+   * @param  array
+   * @author Tobias Bleckert <tbleckert@gmail.com>
+   * @author Eddie Machado <http://themble.com>
+   * @link   http://codex.wordpress.org/Function_Reference/add_image_size
+	 */
 	
 	public function addImageSizes($sizes) {
 		if (is_array($sizes)) {
@@ -125,7 +263,6 @@ class Inizio extends Initial {
 		}
 	}
 	
-	// Sidebars & Widgetizes Areas
 	public function addSidebars($addSidebars = array()) {
 		if (is_array($addSidebars)) {
 			$register_new_sidebars = function () use ($addSidebars) {
