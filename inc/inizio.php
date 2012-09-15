@@ -96,7 +96,7 @@ class Inizio extends Initial {
 					if (is_array($specific)) {
 						add_theme_support($feature, $specific);
 					} else {
-						add_theme_support($feature);
+						add_theme_support($specific);
 					}
 				}
 			};
@@ -296,18 +296,15 @@ class Inizio extends Initial {
 	 * @author Eddie Machado <http://themble.com>
    */
 	
-	public function customizeLogin($css) {
-		function bones_login_css() {
-			echo '<link rel="stylesheet" href="' .$css. '">';
-		}
+	public function customizeLogin($stylesheet) {
+		$login_css = function () use ($stylesheet) {
+			wp_enqueue_style('login-css', $stylesheet);
+		};
 		
-		function bones_login_url() {  return home_url(); }
+		add_action('login_head', $login_css);
 		
 		function bones_login_title() { return get_option('blogname'); }
 		
-		// calling it only on the login page
-		add_action('login_head', 'bones_login_css');
-		add_filter('login_headerurl', 'bones_login_url');
 		add_filter('login_headertitle', 'bones_login_title');
 	}
 	

@@ -1,0 +1,64 @@
+/******************************************************************
+Bones Custom Login Stylesheet
+
+Designed by Eddie Machado
+http://themble.com/bones
+hello@themble.com
+
+This stylesheet is loaded (if admin.php is setup in your 
+functions file) on the login page. This way you can style 
+the login page. It won't affect any other page, admin or front-end.
+
+For more info, check out the codex:
+http://codex.wordpress.org/Creating_Admin_Themes
+
+******************************************************************/
+
+
+body.login {
+
+  background: #aeaeae url(gfx/login-bg.png) repeat;
+
+} 
+
+
+#login {} /* the form box */
+
+/*
+This is the Wordpress logo in the admin area.
+You'll have to load your own images and mess
+with the width and height.
+*/
+#login h1 a {
+	background: url(gfx/login-logo.png) no-repeat center top; /* make sure to replace this! */
+	width: 320px;
+	height: 112px;
+	text-indent: -9999px;
+	overflow: hidden;
+	padding-bottom: 15px;
+	display: block;
+}
+
+#login form {
+	margin-left: 8px;
+	padding: 26px 24px 46px;
+	font-weight: normal;
+	background: #606060;
+	-webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+	border-radius: 3px;
+	box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(255, 255, 255, 0.2);
+	border: none;
+	
+}
+
+.login label, .login #nav a, .login #backtoblog a {
+  color: #fff !important;
+  text-shadow: none;
+}
+
+/*
+You'll have to override some of the default styles
+but since we're referencing the id, it should be easy.
+*/
+#wp-submit {} /* login button*/

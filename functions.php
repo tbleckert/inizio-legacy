@@ -118,4 +118,7 @@ $sidebars = array(
 
 Inizio::addSidebars($sidebars);
 
+// Customize the login page
+Inizio::customizeLogin(get_stylesheet_directory_uri() . '/assets/css/admin/login.css');
+
 ?>
