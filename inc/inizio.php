@@ -371,4 +371,37 @@ class Inizio extends Initial {
 	  add_action( 'admin_menu', $my_remove_menu_pages );
 	}
 	
+	/**
+	 * Is ajax?
+	 *
+	 * Simple function to check if the request was an ajax request.
+	 *
+	 * @author Tobias Bleckert <tbleckert@gmail.com>
+	 * @return bool true|false
+	 */
+	public function is_ajax() {
+	  return isset($_SERVER['HTTP_X_REQUESTED_WITH']) AND strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
+	}
+
+  /**
+   * Get posts with thumbnail
+   *
+   * Returns an array of posts that has a thumbnail.
+   *
+   * @param  string post type
+   * @param  int    number of posts
+   * @return array  posts
+   * @author Tobias Bleckert <tbleckert@gmail.com>
+   */
+	public function getPostsWithThumbnail($post_type = 'post', $limit = 5) {
+		$posts = get_posts(array( 'post_type' => $post_type, 'numberposts' => $limit, 'meta_key' => '_thumbnail_id') );
+		return $posts;
+	}
+
+	/* http://wp-snippets.com/limit-excerpt-words/ */
+	public function limit_words($string, $word_limit) {
+		$words = explode(' ', $string);
+		return implode(' ', array_slice($words, 0, $word_limit));
+	}
+	
 }
