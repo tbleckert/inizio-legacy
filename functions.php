@@ -12,6 +12,8 @@ require_once('inc/inizio.php'); // required
 require_once('inc/custom-post-type.php'); // optional
 
 define('VERSION', time()); // Change this to your asset version (you can use time() when developing)
+define('WEBROOT', TEMPLATEPATH . '/');
+define('DOCROOT', get_bloginfo('template_directory') . '/'); 
 
 Inizio::init();
 
@@ -20,7 +22,7 @@ $assets = array(
 		'do'      => 'enqueue',
 		'type'    => 'script',
 		'handle'  => 'inizio-modernizr',
-		'src'     => get_stylesheet_directory_uri() . '/assets/js/libs/modernizr.custom.min.js',
+		'src'     => WEBROOT . 'assets/js/libs/modernizr.custom.min.js',
 		'deps'    => false,
 		'version' => '2.5.3'
 	),
@@ -29,7 +31,7 @@ $assets = array(
 		'do'      => 'enqueue',
 		'type'    => 'style',
 		'handle'  => 'inizio-stylesheet',
-		'src'     => get_stylesheet_directory_uri() . '/assets/css/style.css',
+		'src'     => WEBROOT . 'assets/css/style.css',
 		'deps'    => false,
 		'version' => VERSION
 	),
@@ -38,7 +40,7 @@ $assets = array(
 		'do'      => 'enqueue',
 		'type'    => 'script',
 		'handle'  => 'inizio-js',
-		'src'     => get_stylesheet_directory_uri() . '/assets/js/scripts.js',
+		'src'     => WEBROOT . 'assets/js/scripts.js',
 		'deps'    => array('jquery'),
 		'version' => VERSION,
 		'in_footer' => true
@@ -49,7 +51,7 @@ Inizio::assets($assets);
 
 // Thumbnail sizes
 $image_sizes = array(
-	'default'         => array(
+	'default'  => array(
 		'width'  => 125,
 		'height' => 125,
 		'crop'   => true
