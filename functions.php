@@ -13,7 +13,7 @@ require_once('inc/custom-post-type.php'); // optional
 
 define('VERSION', time()); // Change this to your asset version (you can use time() when developing)
 
-Inizio::ahoy();
+Inizio::init();
 
 $assets = array(
 	array(

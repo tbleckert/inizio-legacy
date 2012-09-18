@@ -29,19 +29,19 @@ class Inizio extends Initial {
    * @author Eddie Machado <http://themble.com>
    */
    
-	public function ahoy() {
-		add_action('after_setup_theme', self::init(), 15);
+	public function init() {
+		add_action('after_setup_theme', self::_init(), 15);
 	}
 	
 	/**
 	 * init
 	 *
-	 * Called by ahoy and should not be called directly
+	 * Called by init and should not be called directly
 	 *
 	 * @author Eddie Machado <http://themble.com>
 	 */
 	 
-	public function init() {
+	public function _init() {
 		// launching operation cleanup
     add_action('init', array('Inizio', 'head_cleanup'));
     // remove WP version from RSS
@@ -52,7 +52,6 @@ class Inizio extends Initial {
     add_action('wp_head', array('Inizio', 'remove_recent_comments_style'), 1);
     // clean up gallery output in wp
     add_filter('gallery_style', array('Inizio', 'gallery_style'));
-    
     // cleaning up random code around images
     add_filter('the_content', array('Inizio', 'filter_ptags_on_images'));
     // cleaning up excerpt
