@@ -340,4 +340,35 @@ class Inizio extends Initial {
 		echo paginate_links( $pagination );
 	}
 	
+	public function removeFromMenu($remove) {
+	  global $menu;
+	  $menu = array(
+	    'posts'    => 'edit.php',
+	    'media'    => 'upload.php',
+	    'links'    => 'link-manager.php',
+	    'comments' => 'edit-comments.php',
+	    'themes'   => 'themes.php',
+	    'plugins'  => 'plugins.php',
+	    'users'    => 'users.php',
+	    'tools'    => 'tools.php',
+	    'options'  => 'options-general.php'
+	  );
+	  
+	  $my_remove_menu_pages = function () use ($remove) {
+  	  global $menu;
+  	  
+  	  if (is_array($remove)) {
+  	    foreach ($remove as $item) {
+  	      if (isset($menu[$item])) remove_menu_page($menu[$item]);
+  	    }
+  	  } else {
+  	    remove_menu_page($menu[$remove]);
+  	  }
+  	  
+  	  unset($menu);
+  	};
+	  
+	  add_action( 'admin_menu', $my_remove_menu_pages );
+	}
+	
 }
