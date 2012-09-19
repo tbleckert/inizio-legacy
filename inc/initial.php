@@ -1,12 +1,29 @@
 <?php
 
+/**
+ * Initial
+ *
+ * This is a collection of useful functions that will autorun in Inizio.
+ * As the author says:
+ *
+ *     "The default wordpress head is
+ *      a mess. Let's clean it up by
+ *      removing all the junk we don't
+ *      need."
+ *
+ * I think that there's more messed up things, this setup of functions
+ * will simply remove or fix stuff in wordpress.
+ *
+ * @author  Eddie Machado <http://themble.com>
+ * @version 1.0
+ */
 class Initial {
 
 	public function head_cleanup() {
 		// category feeds
-		// remove_action( 'wp_head', 'feed_links_extra', 3 );                    
+		remove_action( 'wp_head', 'feed_links_extra', 3 );                    
 		// post and comment feeds
-		// remove_action( 'wp_head', 'feed_links', 2 );                          
+		remove_action( 'wp_head', 'feed_links', 2 );                          
 		// EditURI link
 		remove_action( 'wp_head', 'rsd_link' );                               
 		// windows live writer
@@ -48,13 +65,6 @@ class Initial {
 	// remove the p from around imgs (http://css-tricks.com/snippets/wordpress/remove-paragraph-tags-from-around-images/)
 	public function filter_ptags_on_images($content){
 	   return preg_replace('/<p>\s*(<a .*>)?\s*(<img .* \/>)\s*(<\/a>)?\s*<\/p>/iU', '\1\2\3', $content);
-	}
-	
-	// This removes the annoying […] to a Read More link
-	public function excerpt_more($more) {
-		global $post;
-		// edit here if you like
-		return '...  <a href="'. get_permalink($post->ID) . '" title="Read '.get_the_title($post->ID).'">Read more &raquo;</a>';
 	}
 
 }

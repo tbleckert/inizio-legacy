@@ -340,6 +340,15 @@ class Inizio extends Initial {
 		echo paginate_links( $pagination );
 	}
 	
+	/**
+	 * Remove from menu
+	 *
+	 * It's always good to remove/hide stuff that you don't use.
+	 * This function simply remove menu items from the admin menu.
+	 *
+	 * @param  string/array string or array containing the items you want to remove
+	 * @author Tobias Bleckert <tbleckert@gmail.com>
+	 */
 	public function removeFromMenu($remove) {
 	  global $menu;
 	  $menu = array(
