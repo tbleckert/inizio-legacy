@@ -110,7 +110,7 @@ add_action( 'init', 'register_custom_post_example');
 add_action( 'admin_head', 'cpt_icons' );
 function cpt_icons() { ?>
   <style type="text/css" media="screen">
-      #menu-posts-article .wp-menu-image { background: url(<?php echo get_stylesheet_directory_uri() . '/assets/img/icons/pencil.png' ?>) no-repeat 6px -17px !important; }
+      #menu-posts-article .wp-menu-image { background: url(<?php echo get_stylesheet_directory_uri() . '/admin/assets/img/icons/pencil.png' ?>) no-repeat 6px -17px !important; }
       #menu-posts-article:hover .wp-menu-image, #menu-posts-article.wp-has-current-submenu .wp-menu-image { background-position:6px 7px!important; }
   </style>
 <?php } ?>

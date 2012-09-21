@@ -9,7 +9,8 @@ and now updated to fit my needs and hopefully yours.
 
 /* Include files */
 require_once('inc/inizio.php'); // required
-require_once('inc/custom-post-type.php'); // optional
+require_once('inc/custom-post-type.php'); // custom post type example
+require_once('admin/theme_info.php'); // inizio theme info
 
 define('VERSION', time()); // Change this to your asset version (you can use time() when developing)
 define('WEBROOT', TEMPLATEPATH . '/');
