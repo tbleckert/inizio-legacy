@@ -74,6 +74,10 @@ header h1 {
   font-size: 48px;
   color: #303030;
   line-height: 1.2;
+  text-indent: -10000px;
+  background: url(../images/logo.png) no-repeat;
+  width: 159px;
+  height: 112px;
 }
 
 header h2 {
