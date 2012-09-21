@@ -1,9 +1,7 @@
 /******************************************************************
-Bones Custom Login Stylesheet
+Inizio Custom Login Stylesheet
 
-Designed by Eddie Machado
-http://themble.com/bones
-hello@themble.com
+Designed by Tobias Bleckert
 
 This stylesheet is loaded (if admin.php is setup in your 
 functions file) on the login page. This way you can style 
@@ -15,11 +13,7 @@ http://codex.wordpress.org/Creating_Admin_Themes
 ******************************************************************/
 
 
-body.login {
-
-  background: #aeaeae url(gfx/login-bg.png) repeat;
-
-} 
+body.login { background: #aeaeae url(gfx/login-bg.png) repeat; } 
 
 
 #login {} /* the form box */
@@ -40,21 +34,70 @@ with the width and height.
 }
 
 #login form {
-	margin-left: 8px;
-	padding: 26px 24px 46px;
+	margin: 0;
+	padding: 0;
 	font-weight: normal;
-	background: #606060;
-	-webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-	border-radius: 3px;
-	box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(255, 255, 255, 0.2);
+	background: transparent;
+	box-shadow: none;
 	border: none;
-	
+	overflow: hidden;
+}
+
+#login_error, .login .message {
+	margin: 0 0 16px;
+	padding: 10px;
+	box-shadow: inset 0 1px 2px black, 0 1px 1px rgba(255, 255, 255, 0.2);
+	border: none;
+	background: #837c20;
+	color: #eee;
+}
+
+.login .button-primary,
+.login .button-primary:hover,
+.login .button-primary:active {
+	background: #9cc72f;
+	background: -moz-linear-gradient(top,  #9cc72f 0%, #88b330 50%, #709f15 51%, #61900c 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#9cc72f), color-stop(50%,#88b330), color-stop(51%,#709f15), color-stop(100%,#61900c));
+	background: -webkit-linear-gradient(top,  #9cc72f 0%,#88b330 50%,#709f15 51%,#61900c 100%);
+	background: -o-linear-gradient(top,  #9cc72f 0%,#88b330 50%,#709f15 51%,#61900c 100%);
+	background: -ms-linear-gradient(top,  #9cc72f 0%,#88b330 50%,#709f15 51%,#61900c 100%);
+	background: linear-gradient(to bottom,  #9cc72f 0%,#88b330 50%,#709f15 51%,#61900c 100%);
+	border-radius: 3px;
+	box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.2), 0 1px 4px rgba(0, 0, 0, 0.5);
+	border: none;
+	padding: 9px 20px;
+	font-weight: normal;
+	color: #fff;
+	margin-bottom: 5px;
+}
+
+.login #nav, .login #backtoblog {
+	margin: 0;
+	padding-left: 0;
+}
+
+.login #nav {
+	float: right;
+	padding-right: 0;
 }
 
 .login label, .login #nav a, .login #backtoblog a {
   color: #fff !important;
   text-shadow: none;
+}
+
+.login form .input, .login input[type="text"] {
+	background: #232326;
+	font-size: 12px;
+	padding: 10px;
+	border: none;
+	box-shadow: inset 0 1px 2px black, 0 1px 1px rgba(255, 255, 255, 0.2);
+	color: #eee;
+}
+
+input:-webkit-autofill {
+	background-color: #232326 !important;
+	box-shadow: inset 0 1px 2px black, inset 0 0 5px #FAFFBD, 0 1px 1px rgba(255, 255, 255, 0.2);
 }
 
 /*
