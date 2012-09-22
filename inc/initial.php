@@ -4,14 +4,8 @@
  * Initial
  *
  * This is a collection of useful functions that will autorun in Inizio.
- * As the author says:
  *
- *     "The default wordpress head is
- *      a mess. Let's clean it up by
- *      removing all the junk we don't
- *      need."
- *
- * I think that there's more messed up things, this setup of functions
+ * Wordpress are in some places a mess, this setup of functions
  * will simply remove or fix stuff in wordpress.
  *
  * @author  Eddie Machado <http://themble.com>
