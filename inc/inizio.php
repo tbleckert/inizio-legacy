@@ -438,14 +438,11 @@ class Inizio extends Initial {
 	 *     news
 	 *     quick_press
 	 *     plugins
-	 * @author Aurélien Denis <http://wp.smashingmagazine.com/2012/05/17/customize-wordpress-admin-easily/>
 	 * @author Tobias Bleckert <tbleckert@gmail.com>
 	 */
 	 
 	public function hideFromDashboard($widgets) {
 		$dashboard_widgets = function () use ($widgets) {
-			global $wp_meta_boxes;
-			
 			$real_widget = array(
 				'right_now'       => array('normal', 'dashboard_right_now'),
 				'recent_comments' => array('normal', 'dashboard_recent_comments'),
@@ -459,10 +456,10 @@ class Inizio extends Initial {
 			
 			if (is_array($widgets)) {
 				foreach($widgets as $widget) {
-					unset($wp_meta_boxes['dashboard'][$real_widget[$widget][0]]['core'][$real_widget[$widget][1]]);
+					remove_meta_box( $real_widget[$widget][1], 'dashboard', $real_widget[$widget][0] );
 				}
 			} else {
-				unset($wp_meta_boxes['dashboard'][$real_widget[$widgets][0]]['core'][$real_widget[$widgets][1]]);
+				remove_meta_box( $real_widget[$widgets][1], 'dashboard', $real_widget[$widgets][0] );
 			}
 		};
 		
