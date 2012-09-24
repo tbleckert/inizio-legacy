@@ -370,9 +370,11 @@ class Inizio extends Initial {
 			if (is_array($remove)) {
 				foreach ($remove as $item) {
 					if (isset($menu[$item])) remove_menu_page($menu[$item]);
+					if ($item == 'comments') self::hideFromDashboard('recent_comments');
 				}
 			} else {
 				remove_menu_page($menu[$remove]);
+				if ($remove == 'comments') Inizio::hideFromDashboard('recent_comments');
 			}
 			
 			unset($menu);
@@ -419,6 +421,52 @@ class Inizio extends Initial {
 	public function limit_words($string, $word_limit) {
 		$words = explode(' ', $string);
 		return implode(' ', array_slice($words, 0, $word_limit));
+	}
+	
+	/**
+	 * Hide dashboard widgets
+	 *
+	 * Hide widgets from the dashboards by adding a string or array of widget names
+	 *
+	 * @param string/array of widget names, right now you can use
+	 *
+	 *     right_now
+	 *     recent_comments
+	 *     incoming_links
+	 *     recent_drafts
+	 *     blog
+	 *     news
+	 *     quick_press
+	 *     plugins
+	 * @author Aurélien Denis <http://wp.smashingmagazine.com/2012/05/17/customize-wordpress-admin-easily/>
+	 * @author Tobias Bleckert <tbleckert@gmail.com>
+	 */
+	 
+	public function hideFromDashboard($widgets) {
+		$dashboard_widgets = function () use ($widgets) {
+			global $wp_meta_boxes;
+			
+			$real_widget = array(
+				'right_now'       => array('normal', 'dashboard_right_now'),
+				'recent_comments' => array('normal', 'dashboard_recent_comments'),
+				'incoming_links'  => array('normal', 'dashboard_incoming_links'),
+				'recent_drafts'   => array('side',   'dashboard_recent_drafts'),
+				'blog'            => array('side',   'dashboard_primary'),
+				'news'            => array('side',   'dashboard_secondary'),
+				'quick_press'     => array('side',   'dashboard_quick_press'),
+				'plugins'         => array('normal', 'dashboard_plugins')
+			);
+			
+			if (is_array($widgets)) {
+				foreach($widgets as $widget) {
+					unset($wp_meta_boxes['dashboard'][$real_widget[$widget][0]]['core'][$real_widget[$widget][1]]);
+				}
+			} else {
+				unset($wp_meta_boxes['dashboard'][$real_widget[$widgets][0]]['core'][$real_widget[$widgets][1]]);
+			}
+		};
+		
+		add_action('wp_dashboard_setup', $dashboard_widgets);
 	}
 
 }

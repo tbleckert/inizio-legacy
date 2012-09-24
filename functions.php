@@ -127,4 +127,16 @@ Inizio::customizeLogin(get_stylesheet_directory_uri() . '/admin/assets/css/login
 // Remove a admin menu item
 Inizio::removeFromMenu('comments');
 
+// Hide the default wordpress widgets
+Inizio::hideFromDashboard(array(
+	//'recent_comments', auto removed when removing comments from the admin menu
+	'incoming_links',
+	'right_now',
+	'plugins',
+	'blog',
+	'news',
+	'quick_press',
+	'recent_drafts'
+));
+
 ?>
