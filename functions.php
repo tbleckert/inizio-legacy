@@ -8,13 +8,13 @@ and now updated to fit my needs and hopefully yours.
 */
 
 /* Include files */
-require_once('inc/inizio.php'); // required
-require_once('inc/custom-post-type.php'); // custom post type example
-require_once('admin/theme_info.php'); // inizio theme info
+require_once( 'inc/inizio.php' ); // required
+require_once( 'inc/custom-post-type.php' ); // custom post type example
+require_once( 'admin/theme_info.php' ); // inizio theme info
 
-define('VERSION', time()); // Change this to your asset version (you can use time() when developing)
-define('WEBROOT', TEMPLATEPATH . '/');
-define('DOCROOT', get_bloginfo('template_directory') . '/'); 
+define( 'VERSION', time() ); // Change this to your asset version (you can use time() when developing)
+define( 'WEBROOT', TEMPLATEPATH . '/' );
+define( 'DOCROOT', get_bloginfo( 'template_directory' ) . '/' ); 
 
 Inizio::init();
 
@@ -48,7 +48,7 @@ $assets = array(
 	),
 );
 
-Inizio::assets($assets);
+Inizio::assets( $assets );
 
 // Thumbnail sizes
 $image_sizes = array(
@@ -72,7 +72,7 @@ $image_sizes = array(
 );
 
 // We use this function to add the image sizes and also to show them in the media box
-Inizio::addImageSizes($image_sizes);
+Inizio::addImageSizes( $image_sizes );
 
 // Theme features
 $support = array(
@@ -99,33 +99,34 @@ $support = array(
 	'menus'
 );
 
-Inizio::themeSupport($support);  
+Inizio::themeSupport( $support );  
 
 // Add menus
 Inizio::addMenus(array( 
-	'main-nav' => __( 'The Main Menu', 'iniziotheme' ),   // main nav in header
+	'main-nav'     => __( 'The Main Menu', 'iniziotheme' ),   // main nav in header
 	'footer-links' => __( 'Footer Links', 'iniziotheme' ) // secondary nav in footer
 ));
 
+// Add example sidebar
 $sidebars = array(
 	array(
-		'id' => 'sidebar1',
-		'name' => 'Sidebar 1',
-		'description' => 'The first (primary) sidebar.',
+		'id'            => 'sidebar1',
+		'name'          => 'Sidebar 1',
+		'description'   => 'The first (primary) sidebar.',
 		'before_widget' => '<div id="%1$s" class="widget %2$s">',
-		'after_widget' => '</div>',
-		'before_title' => '<h4 class="widgettitle">',
-		'after_title' => '</h4>',
+		'after_widget'  => '</div>',
+		'before_title'  => '<h4 class="widgettitle">',
+		'after_title'   => '</h4>',
 	)
 );
 
-Inizio::addSidebars($sidebars);
+Inizio::addSidebars( $sidebars );
 
 // Customize the login page
-Inizio::customizeLogin(get_stylesheet_directory_uri() . '/admin/assets/css/login.css');
+Inizio::customizeLogin( get_stylesheet_directory_uri() . '/admin/assets/css/login.css' );
 
 // Remove a admin menu item
-Inizio::removeFromMenu('comments');
+Inizio::removeFromMenu( 'comments' );
 
 // Hide the default wordpress widgets
 Inizio::hideFromDashboard(array(

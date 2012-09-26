@@ -30,7 +30,7 @@ class Inizio extends Initial {
 	 */
 	
 	public function init() {
-		add_action('after_setup_theme', self::_init(), 15);
+		add_action( 'after_setup_theme', self::_init(), 15 );
 	}
 	
 	/**
@@ -43,19 +43,25 @@ class Inizio extends Initial {
 	
 	public function _init() {
 		// launching operation cleanup
-		add_action('init', array('Inizio', 'head_cleanup'));
+		add_action( 'init', array( 'Inizio', 'head_cleanup' ) );
+		
 		// remove WP version from RSS
-		add_filter('the_generator', array('Inizio', 'rss_version'));
+		add_filter( 'the_generator', array('Inizio', 'rss_version' ) );
+		
 		// remove pesky injected css for recent comments widget
-		add_filter( 'wp_head', array('Inizio', 'remove_wp_widget_recent_comments_style'), 1);
+		add_filter( 'wp_head', array( 'Inizio', 'remove_wp_widget_recent_comments_style' ), 1);
+		
 		// clean up comment styles in the head
-		add_action('wp_head', array('Inizio', 'remove_recent_comments_style'), 1);
+		add_action( 'wp_head', array( 'Inizio', 'remove_recent_comments_style' ), 1 );
+		
 		// clean up gallery output in wp
-		add_filter('gallery_style', array('Inizio', 'gallery_style'));
+		add_filter( 'gallery_style', array( 'Inizio', 'gallery_style' ) );
+		
 		// cleaning up random code around images
-		add_filter('the_content', array('Inizio', 'filter_ptags_on_images'));
+		add_filter( 'the_content', array( 'Inizio', 'filter_ptags_on_images' ) );
+		
 		// cleaning up excerpt
-		add_filter('excerpt_more', array('Inizio', 'excerpt_more'));
+		add_filter( 'excerpt_more', array( 'Inizio', 'excerpt_more' ) );
 	}
 	
 	/**
@@ -88,19 +94,19 @@ class Inizio extends Initial {
 	 * @link   http://codex.wordpress.org/Function_Reference/add_theme_support
 	 */
 	
-	public function themeSupport($support = array()) {
-		if (is_array($support)) {
-			$register_theme_support = function () use ($support) {
-				foreach ($support as $feature => $specific) {
-					if (is_array($specific)) {
-						add_theme_support($feature, $specific);
+	public function themeSupport( $support = array() ) {
+		if ( is_array( $support ) ) {
+			$register_theme_support = function () use ( $support ) {
+				foreach ( $support as $feature => $specific ) {
+					if ( is_array( $specific ) ) {
+						add_theme_support( $feature, $specific );
 					} else {
-						add_theme_support($specific);
+						add_theme_support( $specific );
 					}
 				}
 			};
 			
-			add_action('after_setup_theme', $register_theme_support);
+			add_action( 'after_setup_theme', $register_theme_support );
 		}
 	}
 	
@@ -143,9 +149,9 @@ class Inizio extends Initial {
 	 * @link   http://codex.wordpress.org/Function_Reference/wp_enqueue_script
 	 */
 	
-	public static function assets(array $assets) {
-		$addAssets = function () use ($assets) {
-			if (!is_admin()) {
+	public static function assets( array $assets ) {
+		$addAssets = function () use ( $assets ) {
+			if ( ! is_admin() ) {
 				$defaults = array(
 					'do'        => 'register',
 					'type'      => 'script',
@@ -154,31 +160,31 @@ class Inizio extends Initial {
 					'version'   => false
 				);
 				
-				foreach($assets as $asset) {
-					$asset = wp_parse_args($asset, $defaults);
+				foreach( $assets as $asset ) {
+					$asset = wp_parse_args( $asset, $defaults );
 					extract($asset, EXTR_SKIP);
 					
-					if ($type == 'script') {
-						if ($do == 'enqueue') {
-							wp_enqueue_script( $handle, $src, $deps, $version, $in_footer);
+					if ( $type == 'script' ) {
+						if ( $do == 'enqueue' ) {
+							wp_enqueue_script( $handle, $src, $deps, $version, $in_footer );
 						} else {
-							wp_register_script( $handle, $src, $deps, $version, $in_footer);
+							wp_register_script( $handle, $src, $deps, $version, $in_footer );
 						}
 					} else {
-						if ($do == 'enqueue') {
-							wp_enqueue_style( $handle, $src, $deps, $version, $in_footer);
+						if ( $do == 'enqueue' ) {
+							wp_enqueue_style( $handle, $src, $deps, $version, $in_footer );
 						} else {
-							wp_register_style($handle, $src, $deps, $version, $in_footer);
+							wp_register_style($handle, $src, $deps, $version, $in_footer );
 						}
 					}
 				}
 				
 				wp_deregister_script( 'jquery' ); // deregisters the default WordPress jQuery
-				wp_enqueue_script('jquery', 'http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js', false, '1.7.2', true); // register the external file
+				wp_enqueue_script( 'jquery', 'http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js', false, '1.7.2', true ); // register the external file
 			}
 		};
 		
-		add_action('wp_enqueue_scripts', $addAssets, 999);
+		add_action( 'wp_enqueue_scripts', $addAssets, 999 );
 	}
 	
 	/**
@@ -191,12 +197,12 @@ class Inizio extends Initial {
 	 * @link   http://codex.wordpress.org/Function_Reference/register_nav_menus
 	 */
 	
-	public function addMenus($menus) {
-		$register_menus = function () use ($menus) {
-			register_nav_menus($menus);
+	public function addMenus( $menus ) {
+		$register_menus = function () use ( $menus ) {
+			register_nav_menus( $menus );
 		};
 	
-		add_action('after_setup_theme', $register_menus);
+		add_action( 'after_setup_theme', $register_menus );
 	}
 	
 	/**
@@ -236,38 +242,39 @@ class Inizio extends Initial {
 	 * @link   http://codex.wordpress.org/Function_Reference/add_image_size
 	 */
 	
-	public function addImageSizes($sizes) {
+	public function addImageSizes( $sizes ) {
 		$defaults = array(
 			'width'  => 0,
 			'height' => 0,
 			'crop'   => false
 		);
 		
-		if (is_array($sizes)) {
-			$register_image_sizes = function () use ($sizes) {
+		if ( is_array( $sizes ) ) {
+			$register_image_sizes = function () use ( $sizes ) {
 				$labels = array();
 				
-				foreach($sizes as $name => $size) {
-					$size = wp_parse_args($size, $defaults);
-					extract($size, EXTR_SKIP);
+				foreach ( $sizes as $name => $size ) {
+					$size = wp_parse_args( $size, $defaults );
+					extract( $size, EXTR_SKIP );
 					
-					if ($name == 'default') {
-						set_post_thumbnail_size($width, $height, $crop);
+					if ( $name == 'default' ) {
+						set_post_thumbnail_size( $width, $height, $crop );
 					} else {
-						add_image_size($name, $width, $height, $crop);
-						if ($label) $labels[$name] = $label;
+						add_image_size( $name, $width, $height, $crop );
+						if ( $label )
+							$labels[$name] = $label;
 					}
 				}
 				
-				$image_sizes = function ($sizes) use ($labels) {
-					$newsizes = array_merge($sizes, $labels);
+				$image_sizes = function ( $sizes ) use ( $labels ) {
+					$newsizes = array_merge( $sizes, $labels );
 					return $newsizes;
 				};
 			
-				add_filter('image_size_names_choose', $image_sizes);
+				add_filter( 'image_size_names_choose', $image_sizes );
 			};
 			
-			add_action('after_setup_theme', $register_image_sizes);
+			add_action( 'after_setup_theme', $register_image_sizes );
 		}
 	}
 	
@@ -282,15 +289,15 @@ class Inizio extends Initial {
 	 * @link   http://codex.wordpress.org/Function_Reference/register_sidebar
 	 */
 	
-	public function addSidebars($addSidebars = array()) {
-		if (is_array($addSidebars)) {
-			$register_new_sidebars = function () use ($addSidebars) {
-				foreach($addSidebars as $sidebar) {
-					register_sidebar($sidebar);
+	public function addSidebars( $addSidebars = array() ) {
+		if ( is_array($addSidebars) ) {
+			$register_new_sidebars = function () use ( $addSidebars ) {
+				foreach( $addSidebars as $sidebar ) {
+					register_sidebar( $sidebar );
 				}
 			};
 			
-			add_action('widgets_init', $register_new_sidebars);
+			add_action( 'widgets_init', $register_new_sidebars );
 		}
 	}
 	
@@ -304,31 +311,33 @@ class Inizio extends Initial {
 	 * @author Eddie Machado <http://themble.com>
 	 */
 	
-	public function customizeLogin($stylesheet) {
-		$login_css = function () use ($stylesheet) {
-		 wp_enqueue_style('login-css', $stylesheet);
+	public function customizeLogin( $stylesheet ) {
+		$login_css = function () use ( $stylesheet ) {
+			wp_enqueue_style( 'login-css', $stylesheet );
 		};
 		
-		add_action('login_head', $login_css);
+		add_action( 'login_head', $login_css );
 		
-		function bones_login_title() { return get_option('blogname'); }
+		function bones_login_title() { 
+			return get_option( 'blogname' ); 
+		}
 		
 		add_filter('login_headertitle', 'bones_login_title');
 	}
 		
 	/* http://wp-snippets.com/pagination-without-plugin/ */
-	public function pagination($prev = '«', $next = '»') {
+	public function pagination( $prev = '«', $next = '»' ) {
 		global $wp_query, $wp_rewrite;
-		$wp_query->query_vars['paged'] > 1 ? $current = $wp_query->query_vars['paged'] : $current = 1;
+		$current = ( $wp_query->query_vars['paged'] > 1 ) ? $wp_query->query_vars['paged'] : 1;
 		
 		$pagination = array(
-			'base' => @add_query_arg('paged','%#%'),
-			'format' => '',
-			'total' => $wp_query->max_num_pages,
-			'current' => $current,
-			'prev_text' => __($prev),
-			'next_text' => __($next),
-			'type' => 'plain'
+			'base'      => @add_query_arg( 'paged', '%#%' ),
+			'format'    => '',
+			'total'     => $wp_query->max_num_pages,
+			'current'   => $current,
+			'prev_text' => __( $prev, 'inizio' ),
+			'next_text' => __( $next, 'inizio' ),
+			'type'      => 'plain'
 		);
 		
 		if( $wp_rewrite->using_permalinks() )
@@ -349,9 +358,7 @@ class Inizio extends Initial {
 	 * @param  string/array string or array containing the items you want to remove
 	 * @author Tobias Bleckert <tbleckert@gmail.com>
 	 */
-	public function removeFromMenu($remove) {
-		global $menu;
-		
+	public function removeFromMenu( $remove ) {
 		$menu = array(
 			'posts'    => 'edit.php',
 			'media'    => 'upload.php',
@@ -364,20 +371,22 @@ class Inizio extends Initial {
 			'options'  => 'options-general.php'
 		);
 		
-		$my_remove_menu_pages = function () use ($remove) {
+		$my_remove_menu_pages = function ($menu) use ( $remove ) {
 			global $menu;
 			
-			if (is_array($remove)) {
-				foreach ($remove as $item) {
-					if (isset($menu[$item])) remove_menu_page($menu[$item]);
-					if ($item == 'comments') self::hideFromDashboard('recent_comments');
+			if ( is_array( $remove ) ) {
+				foreach ( $remove as $item ) {
+					if ( isset( $menu[ $item ] ) ) 
+						remove_menu_page( $menu[ $item ] );
+					
+					if ( $item == 'comments' ) 
+						self::hideFromDashboard('recent_comments');
 				}
 			} else {
-				remove_menu_page($menu[$remove]);
-				if ($remove == 'comments') Inizio::hideFromDashboard('recent_comments');
+				remove_menu_page( $menu[ $remove ] );
+				if ( $remove == 'comments' ) 
+					Inizio::hideFromDashboard( 'recent_comments' );
 			}
-			
-			unset($menu);
 		};
 		
 		add_action( 'admin_menu', $my_remove_menu_pages );
@@ -393,7 +402,7 @@ class Inizio extends Initial {
 	 */
 	
 	public function is_ajax() {
-		return isset($_SERVER['HTTP_X_REQUESTED_WITH']) AND strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
+		return isset( $_SERVER['HTTP_X_REQUESTED_WITH'] ) AND strtolower( $_SERVER['HTTP_X_REQUESTED_WITH'] ) === 'xmlhttprequest';
 	}
 	
 	/**
@@ -407,7 +416,7 @@ class Inizio extends Initial {
 	 * @author Tobias Bleckert <tbleckert@gmail.com>
 	 */
 	 
-	public function getPostsWithThumbnail($post_type = 'post', $limit = 5) {
+	public function getPostsWithThumbnail( $post_type = 'post', $limit = 5 ) {
 		$posts = get_posts(array(
 			'post_type'   => $post_type, 
 			'numberposts' => $limit, 
@@ -418,9 +427,9 @@ class Inizio extends Initial {
 	}
 	
 	/* http://wp-snippets.com/limit-excerpt-words/ */
-	public function limit_words($string, $word_limit) {
-		$words = explode(' ', $string);
-		return implode(' ', array_slice($words, 0, $word_limit));
+	public function limit_words( $string, $word_limit ) {
+		$words = explode( ' ', $string );
+		return implode( ' ', array_slice( $words, 0, $word_limit ) );
 	}
 	
 	/**
@@ -441,21 +450,21 @@ class Inizio extends Initial {
 	 * @author Tobias Bleckert <tbleckert@gmail.com>
 	 */
 	 
-	public function hideFromDashboard($widgets) {
-		$dashboard_widgets = function () use ($widgets) {
+	public function hideFromDashboard( $widgets ) {
+		$dashboard_widgets = function () use ( $widgets ) {
 			$real_widget = array(
-				'right_now'       => array('normal', 'dashboard_right_now'),
-				'recent_comments' => array('normal', 'dashboard_recent_comments'),
-				'incoming_links'  => array('normal', 'dashboard_incoming_links'),
-				'recent_drafts'   => array('side',   'dashboard_recent_drafts'),
-				'blog'            => array('side',   'dashboard_primary'),
-				'news'            => array('side',   'dashboard_secondary'),
-				'quick_press'     => array('side',   'dashboard_quick_press'),
-				'plugins'         => array('normal', 'dashboard_plugins')
+				'right_now'       => array( 'normal', 'dashboard_right_now' ),
+				'recent_comments' => array( 'normal', 'dashboard_recent_comments' ),
+				'incoming_links'  => array( 'normal', 'dashboard_incoming_links' ),
+				'recent_drafts'   => array( 'side',   'dashboard_recent_drafts' ),
+				'blog'            => array( 'side',   'dashboard_primary' ),
+				'news'            => array( 'side',   'dashboard_secondary' ),
+				'quick_press'     => array( 'side',   'dashboard_quick_press' ),
+				'plugins'         => array( 'normal', 'dashboard_plugins' )
 			);
 			
-			if (is_array($widgets)) {
-				foreach($widgets as $widget) {
+			if ( is_array( $widgets ) ) {
+				foreach ( $widgets as $widget ) {
 					remove_meta_box( $real_widget[$widget][1], 'dashboard', $real_widget[$widget][0] );
 				}
 			} else {
@@ -463,7 +472,7 @@ class Inizio extends Initial {
 			}
 		};
 		
-		add_action('wp_dashboard_setup', $dashboard_widgets);
+		add_action( 'wp_dashboard_setup', $dashboard_widgets );
 	}
 
 }
