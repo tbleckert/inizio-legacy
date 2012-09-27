@@ -24,21 +24,21 @@ function register_custom_post_example() {
 	new Custom_Post_Type_Helper('article',
 		array(
 			'labels'               => array(
-				'name'               => __('Articles', 'inizio'), /* This is the Title of the Group */
-				'singular_name'      => __('Article', 'inizio'), /* This is the individual type */
-				'all_items'          => __('All articles', 'inizio'), /* the all items menu item */
-				'add_new'            => __('Add New', 'inizio'), /* The add new menu item */
-				'add_new_item'       => __('Add New Article', 'inizio'), /* Add New Display Title */
-				'edit'               => __( 'Edit', 'inizio' ), /* Edit Dialog */
-				'edit_item'          => __('Edit Articles', 'inizio'), /* Edit Display Title */
-				'new_item'           => __('New Article', 'inizio'), /* New Display Title */
-				'view_item'          => __('View Article', 'inizio'), /* View Display Title */
-				'search_items'       => __('Search Article', 'inizio'), /* Search Custom Type Title */ 
-				'not_found'          =>  __('Nothing found in the Database.', 'inizio'), /* This displays if there are no entries yet */ 
-				'not_found_in_trash' => __('Nothing found in Trash', 'inizio'), /* This displays if there is nothing in the trash */
+				'name'               => __('Articles', LANG_DOMAIN), /* This is the Title of the Group */
+				'singular_name'      => __('Article', LANG_DOMAIN), /* This is the individual type */
+				'all_items'          => __('All articles', LANG_DOMAIN), /* the all items menu item */
+				'add_new'            => __('Add New', LANG_DOMAIN), /* The add new menu item */
+				'add_new_item'       => __('Add New Article', LANG_DOMAIN), /* Add New Display Title */
+				'edit'               => __( 'Edit', LANG_DOMAIN ), /* Edit Dialog */
+				'edit_item'          => __('Edit Articles', LANG_DOMAIN), /* Edit Display Title */
+				'new_item'           => __('New Article', LANG_DOMAIN), /* New Display Title */
+				'view_item'          => __('View Article', LANG_DOMAIN), /* View Display Title */
+				'search_items'       => __('Search Article', LANG_DOMAIN), /* Search Custom Type Title */ 
+				'not_found'          =>  __('Nothing found in the Database.', LANG_DOMAIN), /* This displays if there are no entries yet */ 
+				'not_found_in_trash' => __('Nothing found in Trash', LANG_DOMAIN), /* This displays if there is nothing in the trash */
 				'parent_item_colon'  => ''
 			),
-			'description'          => __( 'This is the example custom post type', 'inizio' ), /* Custom Type Description */
+			'description'          => __( 'This is the example custom post type', LANG_DOMAIN ), /* Custom Type Description */
 			'public'               => true,
 			'publicly_queryable'   => true,
 			'exclude_from_search'  => false,
@@ -64,16 +64,16 @@ function register_custom_post_example() {
 		array('article'), /* if you change the name of register_post_type( 'custom_type', then you have to change this */
 		array('hierarchical' => true,     /* if this is true, it acts like categories */             
 			'labels' => array(
-			'name' => __( 'Custom Categories', 'inizio' ), /* name of the custom taxonomy */
-			'singular_name' => __( 'Custom Category', 'inizio' ), /* single taxonomy name */
-			'search_items' =>  __( 'Search Custom Categories', 'inizio' ), /* search title for taxomony */
-			'all_items' => __( 'All Custom Categories', 'inizio' ), /* all title for taxonomies */
-			'parent_item' => __( 'Parent Custom Category', 'inizio' ), /* parent title for taxonomy */
-			'parent_item_colon' => __( 'Parent Custom Category:', 'inizio' ), /* parent taxonomy title */
-			'edit_item' => __( 'Edit Custom Category', 'inizio' ), /* edit custom taxonomy title */
-			'update_item' => __( 'Update Custom Category', 'inizio' ), /* update title for taxonomy */
-			'add_new_item' => __( 'Add New Custom Category', 'inizio' ), /* add new title for taxonomy */
-			'new_item_name' => __( 'New Custom Category Name', 'inizio' ) /* name title for taxonomy */
+			'name' => __( 'Custom Categories', LANG_DOMAIN ), /* name of the custom taxonomy */
+			'singular_name' => __( 'Custom Category', LANG_DOMAIN ), /* single taxonomy name */
+			'search_items' =>  __( 'Search Custom Categories', LANG_DOMAIN ), /* search title for taxomony */
+			'all_items' => __( 'All Custom Categories', LANG_DOMAIN ), /* all title for taxonomies */
+			'parent_item' => __( 'Parent Custom Category', LANG_DOMAIN ), /* parent title for taxonomy */
+			'parent_item_colon' => __( 'Parent Custom Category:', LANG_DOMAIN ), /* parent taxonomy title */
+			'edit_item' => __( 'Edit Custom Category', LANG_DOMAIN ), /* edit custom taxonomy title */
+			'update_item' => __( 'Update Custom Category', LANG_DOMAIN ), /* update title for taxonomy */
+			'add_new_item' => __( 'Add New Custom Category', LANG_DOMAIN ), /* add new title for taxonomy */
+			'new_item_name' => __( 'New Custom Category Name', LANG_DOMAIN ) /* name title for taxonomy */
 		),
 			'show_ui' => true,
 			'query_var' => true,
@@ -86,16 +86,16 @@ function register_custom_post_example() {
 		array('article'),
 		array('hierarchical' => false,               
 			'labels' => array(
-			'name' => __( 'Custom Tags', 'inizio' ),
-			'singular_name' => __( 'Custom Tag', 'inizio' ),
-			'search_items' =>  __( 'Search Custom Tags', 'inizio' ),
-			'all_items' => __( 'All Custom Tags', 'inizio' ),
-			'parent_item' => __( 'Parent Custom Tag', 'inizio' ),
-			'parent_item_colon' => __( 'Parent Custom Tag:', 'inizio' ),
-			'edit_item' => __( 'Edit Custom Tag', 'inizio' ),
-			'update_item' => __( 'Update Custom Tag', 'inizio' ),
-			'add_new_item' => __( 'Add New Custom Tag', 'inizio' ),
-			'new_item_name' => __( 'New Custom Tag Name', 'inizio' )
+			'name' => __( 'Custom Tags', LANG_DOMAIN ),
+			'singular_name' => __( 'Custom Tag', LANG_DOMAIN ),
+			'search_items' =>  __( 'Search Custom Tags', LANG_DOMAIN ),
+			'all_items' => __( 'All Custom Tags', LANG_DOMAIN ),
+			'parent_item' => __( 'Parent Custom Tag', LANG_DOMAIN ),
+			'parent_item_colon' => __( 'Parent Custom Tag:', LANG_DOMAIN ),
+			'edit_item' => __( 'Edit Custom Tag', LANG_DOMAIN ),
+			'update_item' => __( 'Update Custom Tag', LANG_DOMAIN ),
+			'add_new_item' => __( 'Add New Custom Tag', LANG_DOMAIN ),
+			'new_item_name' => __( 'New Custom Tag Name', LANG_DOMAIN )
 		),
 			'show_ui' => true,
 			'query_var' => true,

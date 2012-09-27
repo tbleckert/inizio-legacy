@@ -26,10 +26,15 @@ class Inizio extends Initial {
 	 * This function should be called in your functions.php.
 	 * This function will clean up wordpress and is recomended to use
 	 *
+	 * @param  string directory where you keep your language files (relative to your theme directory)
+	 * @author Tobias Bleckert <tbleckert@gmail.com>
 	 * @author Eddie Machado <http://themble.com>
 	 */
 	
-	public function init() {
+	public function init( $language_directory = 'languages' ) {
+		global $locale_directory;
+		$locale_directory = get_template_directory() . '/languages/';
+		
 		add_action( 'after_setup_theme', self::_init(), 15 );
 	}
 	
@@ -42,6 +47,15 @@ class Inizio extends Initial {
 	 */
 	
 	public function _init() {
+		global $locale_directory;
+		$locale = get_locale();
+		
+		load_theme_textdomain( LANG_DOMAIN, $locale_directory );
+		$locale_file = $locale_directory . '/' . $locale . '.php';
+		
+		if ( is_readable( $locale_file ) )
+			require_once( $locale_file );
+		
 		// launching operation cleanup
 		add_action( 'init', array( 'Inizio', 'head_cleanup' ) );
 		

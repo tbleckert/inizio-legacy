@@ -14,7 +14,9 @@ require_once( 'admin/theme-info.php' ); // inizio theme info
 
 define( 'VERSION', time() ); // Change this to your asset version (you can use time() when developing)
 define( 'WEBROOT', TEMPLATEPATH . '/' );
-define( 'DOCROOT', get_bloginfo( 'template_directory' ) . '/' ); 
+define( 'DOCROOT', get_bloginfo( 'template_directory' ) . '/' );
+define( 'LANG_DOMAIN', 'inizio' ); // Change this to your theme name (in lowercase, separate words via underscores)
+define( 'LOCALE', 'en' ); // You can set this to use a different language than what is set in the admin
 
 Inizio::init();
 
@@ -103,16 +105,16 @@ Inizio::themeSupport( $support );
 
 // Add menus
 Inizio::addMenus(array( 
-	'main-nav'     => __( 'The Main Menu', 'iniziotheme' ),   // main nav in header
-	'footer-links' => __( 'Footer Links', 'iniziotheme' ) // secondary nav in footer
+	'main-nav'     => __( 'The Main Menu', LANG_DOMAIN ), // main nav in header
+	'footer-links' => __( 'Footer Links', LANG_DOMAIN ) // secondary nav in footer
 ));
 
 // Add example sidebar
 $sidebars = array(
 	array(
 		'id'            => 'sidebar1',
-		'name'          => 'Sidebar 1',
-		'description'   => 'The first (primary) sidebar.',
+		'name'          => __( 'Sidebar 1', LANG_DOMAIN ),
+		'description'   => __( 'The first (primary) sidebar.', LANG_DOMAIN ),
 		'before_widget' => '<div id="%1$s" class="widget %2$s">',
 		'after_widget'  => '</div>',
 		'before_title'  => '<h4 class="widgettitle">',
