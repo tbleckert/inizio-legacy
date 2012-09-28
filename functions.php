@@ -13,8 +13,8 @@ require_once( 'inc/custom-post-type.php' ); // custom post type example
 require_once( 'admin/theme-info.php' ); // inizio theme info
 
 define( 'VERSION', time() ); // Change this to your asset version (you can use time() when developing)
-define( 'WEBROOT', TEMPLATEPATH . '/' );
-define( 'DOCROOT', get_bloginfo( 'template_directory' ) . '/' );
+define( 'DOCROOT', TEMPLATEPATH . '/' );
+define( 'WEBROOT', get_bloginfo( 'template_directory' ) . '/' );
 define( 'LANG_DOMAIN', 'inizio' ); // Change this to your theme name (in lowercase, separate words via underscores)
 define( 'LOCALE', 'en' ); // You can set this to use a different language than what is set in the admin
 
@@ -60,13 +60,13 @@ $image_sizes = array(
 		'crop'   => true
 	),
 	'inizio-thumb-600' => array(
-		'label'  => __('Inizio Thumb 600', 'iniziotheme'),
+		'label'  => __( 'Inizio Thumb 600', LANG_DOMAIN ),
 		'width'  => 600,
 		'height' => 150,
 		'crop'   => true
 	),
 	'inizio-thumb-300' => array(
-		'label'  => __('Inizio Thumb 300', 'iniziotheme'),
+		'label'  => __( 'Inizio Thumb 300', LANG_DOMAIN ),
 		'width'  => 300,
 		'height' => 100,
 		'crop'   => true

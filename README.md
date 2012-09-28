@@ -12,14 +12,16 @@ I've provided you with some example files, be sure to check them out and read th
 * assets/
   * css/
     * gfx/
-    * admin/
-      * gfx/
   * js/
     * libs/
   * img/
-    * icons/
+* admin/
+	* css/
+		* gfx/
+	* js/
+	* img/
     
-All sorts of assets is located in the __assets__ folder, those are __css__ and __js__ files and __images__.
+All sorts of assets are located in the __assets__ folder, those are __css__ and __js__ files and __images__.
 I always uses a sub-folder in the __css__ directory called __gfx__. In this folder I store design related images, images that is used via __background-image__.
 The reason I do this is to separate content images and design images. Content images should be in the __img__ folder.
 Last but not least we have the __js__ files, no need to tell you where they should go. Javascript libraries goes into the __libs__ folder.

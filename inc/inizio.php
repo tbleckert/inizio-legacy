@@ -166,6 +166,9 @@ class Inizio extends Initial {
 	public static function assets( array $assets ) {
 		$addAssets = function () use ( $assets ) {
 			if ( ! is_admin() ) {
+				wp_deregister_script( 'jquery' ); // deregisters the default WordPress jQuery
+				wp_enqueue_script( 'jquery', 'http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js', false, '1.7.2', true ); // register the external file
+				
 				$defaults = array(
 					'do'        => 'register',
 					'type'      => 'script',
@@ -176,25 +179,21 @@ class Inizio extends Initial {
 				
 				foreach( $assets as $asset ) {
 					$asset = wp_parse_args( $asset, $defaults );
-					extract($asset, EXTR_SKIP);
 					
-					if ( $type == 'script' ) {
-						if ( $do == 'enqueue' ) {
-							wp_enqueue_script( $handle, $src, $deps, $version, $in_footer );
+					if ( $asset['type'] == 'script' ) {
+						if ( $asset['do'] == 'enqueue' ) {
+							wp_enqueue_script( $asset['handle'], $asset['src'], $asset['deps'], $asset['version'], $asset['in_footer'] );
 						} else {
-							wp_register_script( $handle, $src, $deps, $version, $in_footer );
+							wp_register_script( $asset['handle'], $asset['src'], $asset['deps'], $asset['version'], $asset['in_footer'] );
 						}
 					} else {
-						if ( $do == 'enqueue' ) {
-							wp_enqueue_style( $handle, $src, $deps, $version, $in_footer );
+						if ( $asset['do'] == 'enqueue' ) {
+							wp_enqueue_style( $asset['handle'], $asset['src'], $asset['deps'], $asset['version'], $asset['in_footer'] );
 						} else {
-							wp_register_style($handle, $src, $deps, $version, $in_footer );
+							wp_register_style( $asset['handle'], $asset['src'], $asset['deps'], $asset['version'], $asset['in_footer'] );
 						}
 					}
 				}
-				
-				wp_deregister_script( 'jquery' ); // deregisters the default WordPress jQuery
-				wp_enqueue_script( 'jquery', 'http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js', false, '1.7.2', true ); // register the external file
 			}
 		};
 		
@@ -372,21 +371,19 @@ class Inizio extends Initial {
 	 * @param  string/array string or array containing the items you want to remove
 	 * @author Tobias Bleckert <tbleckert@gmail.com>
 	 */
-	public function removeFromMenu( $remove ) {
-		$menu = array(
-			'posts'    => 'edit.php',
-			'media'    => 'upload.php',
-			'links'    => 'link-manager.php',
-			'comments' => 'edit-comments.php',
-			'themes'   => 'themes.php',
-			'plugins'  => 'plugins.php',
-			'users'    => 'users.php',
-			'tools'    => 'tools.php',
-			'options'  => 'options-general.php'
-		);
-		
-		$my_remove_menu_pages = function ($menu) use ( $remove ) {
-			global $menu;
+	public function removeFromMenu( $remove ) {	
+		$my_remove_menu_pages = function () use ( $remove ) {
+			$menu = array(
+				'posts'    => 'edit.php',
+				'media'    => 'upload.php',
+				'links'    => 'link-manager.php',
+				'comments' => 'edit-comments.php',
+				'themes'   => 'themes.php',
+				'plugins'  => 'plugins.php',
+				'users'    => 'users.php',
+				'tools'    => 'tools.php',
+				'options'  => 'options-general.php'
+			);
 			
 			if ( is_array( $remove ) ) {
 				foreach ( $remove as $item ) {
@@ -394,7 +391,7 @@ class Inizio extends Initial {
 						remove_menu_page( $menu[ $item ] );
 					
 					if ( $item == 'comments' ) 
-						self::hideFromDashboard('recent_comments');
+						Inizio::hideFromDashboard('recent_comments');
 				}
 			} else {
 				remove_menu_page( $menu[ $remove ] );
