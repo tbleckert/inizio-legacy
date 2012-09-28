@@ -268,14 +268,13 @@ class Inizio extends Initial {
 				
 				foreach ( $sizes as $name => $size ) {
 					$size = wp_parse_args( $size, $defaults );
-					extract( $size, EXTR_SKIP );
 					
-					if ( $name == 'default' ) {
-						set_post_thumbnail_size( $width, $height, $crop );
+					if ( $size['name'] == 'default' ) {
+						set_post_thumbnail_size( $size['width'], $size['height'], $size['crop'] );
 					} else {
-						add_image_size( $name, $width, $height, $crop );
+						add_image_size( $size['width'], $size['height'], $size['crop'] );
 						if ( $label )
-							$labels[$name] = $label;
+							$labels[$size['name']] = $label;
 					}
 				}
 				
@@ -484,6 +483,74 @@ class Inizio extends Initial {
 		};
 		
 		add_action( 'wp_dashboard_setup', $dashboard_widgets );
+	}
+	
+	/**
+	 * Featured image
+	 *
+	 * Use this to easily get the featured image of any post.
+	 * It will be formatted with figure and figcaption (if a caption is set for the image).
+	 *
+	 * @param  string/bool  post id or false if in a loop
+	 * @param  string/bool  class to be set on the figure element or false for no class
+	 * @param  string/array the size of the img, can either be a string keyword or a 2-item array representing width and height in pixels
+	 * @return string/bool  html or false if no featured image
+	 * @author Tobias Bleckert <tbleckert@gmail.com>
+	 */
+	 
+	public function featured_image ( $id = false, $class = false, $size = 'medium' ) {
+		global $post;
+		$id = ( $id ) ? $id : $post->ID;
+		
+		if ( has_post_thumbnail( $id ) ) {
+			$html  = ( $class ) ? '<figure class="' . $class . '">' : '<figure>';
+			$html .= get_the_post_thumbnail( $id, $size );
+						
+			if ( $caption = get_post( get_post_thumbnail_id() )->post_excerpt )
+				$html .= '<figcaption>' . $caption . '</figcaption>';
+				
+			$html .= '</figure>';
+			
+			return $html;
+		} else {
+			return false;
+		}
+	}
+	
+	/**
+	 * Is mobile?
+	 *
+	 * This functions checks if the user is visiting using a mobile device and 
+	 * returns result in true or false.
+	 *
+	 * @return bool true|false
+	 * @author Muneeb <http://wp-snippets.com/checks-if-the-visitor-is-from-mobile-device/>
+	 */
+	 
+	public function is_mobile () {
+		if ( function_exists( 'wp_is_mobile' ) )
+			return wp_is_mobile();
+		
+		//code from wp_is_mobile function, wp_is_mobile() is located in wp-includes/vars.php version 3.4
+		static $is_mobile;
+		
+		if ( isset($is_mobile) )
+		return $is_mobile;
+		
+		if ( empty($_SERVER['HTTP_USER_AGENT']) ) {
+			$is_mobile = false;
+		} elseif ( strpos($_SERVER['HTTP_USER_AGENT'], 'Mobile') !== false // many mobile devices (all iPhone, iPad, etc.)
+			|| strpos($_SERVER['HTTP_USER_AGENT'], 'Android') !== false
+			|| strpos($_SERVER['HTTP_USER_AGENT'], 'Silk/') !== false
+			|| strpos($_SERVER['HTTP_USER_AGENT'], 'Kindle') !== false
+			|| strpos($_SERVER['HTTP_USER_AGENT'], 'BlackBerry') !== false
+			|| strpos($_SERVER['HTTP_USER_AGENT'], 'Opera Mini') !== false ) {
+			$is_mobile = true;
+		} else {
+			$is_mobile = false;
+		}
+		
+		return $is_mobile;
 	}
 
 }
