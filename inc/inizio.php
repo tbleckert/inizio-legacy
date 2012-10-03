@@ -73,9 +73,6 @@ class Inizio extends Initial {
 		
 		// cleaning up random code around images
 		add_filter( 'the_content', array( 'Inizio', 'filter_ptags_on_images' ) );
-		
-		// cleaning up excerpt
-		add_filter( 'excerpt_more', array( 'Inizio', 'excerpt_more' ) );
 	}
 	
 	/**
@@ -163,41 +160,43 @@ class Inizio extends Initial {
 	 * @link   http://codex.wordpress.org/Function_Reference/wp_enqueue_script
 	 */
 	
-	public static function assets( array $assets ) {
-		$addAssets = function () use ( $assets ) {
-			if ( ! is_admin() ) {
-				wp_deregister_script( 'jquery' ); // deregisters the default WordPress jQuery
-				wp_enqueue_script( 'jquery', 'http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js', false, '1.7.2', true ); // register the external file
-				
+	public static function assets(array $assets) {
+		$addAssets = function () use ($assets) {
+			if (!is_admin()) {
 				$defaults = array(
 					'do'        => 'register',
 					'type'      => 'script',
 					'in_footer' => false,
 					'deps'      => array(),
-					'version'   => false
+					'version'   => false,
+					'media'     => 'all'
 				);
 				
-				foreach( $assets as $asset ) {
+				foreach($assets as $asset) {					
 					$asset = wp_parse_args( $asset, $defaults );
 					
-					if ( $asset['type'] == 'script' ) {
-						if ( $asset['do'] == 'enqueue' ) {
+					if ($asset['type'] == 'script') {
+						if ($asset['do'] == 'enqueue') {
 							wp_enqueue_script( $asset['handle'], $asset['src'], $asset['deps'], $asset['version'], $asset['in_footer'] );
 						} else {
 							wp_register_script( $asset['handle'], $asset['src'], $asset['deps'], $asset['version'], $asset['in_footer'] );
 						}
 					} else {
-						if ( $asset['do'] == 'enqueue' ) {
-							wp_enqueue_style( $asset['handle'], $asset['src'], $asset['deps'], $asset['version'], $asset['in_footer'] );
+						if ($asset['do'] == 'enqueue') {
+							wp_enqueue_style( $asset['handle'], $asset['src'], $asset['deps'], $asset['version'], $asset['media'] );
 						} else {
-							wp_register_style( $asset['handle'], $asset['src'], $asset['deps'], $asset['version'], $asset['in_footer'] );
+							wp_register_style( $asset['handle'], $asset['src'], $asset['deps'], $asset['version'], $asset['media'] );
 						}
 					}
+				
 				}
+				
+				wp_deregister_script( 'jquery' ); // deregisters the default WordPress jQuery
+				wp_enqueue_script('jquery', 'http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js', false, '1.7.2', true); // register the external file
 			}
 		};
 		
-		add_action( 'wp_enqueue_scripts', $addAssets, 999 );
+		add_action('wp_enqueue_scripts', $addAssets, 999);
 	}
 	
 	/**
@@ -228,11 +227,6 @@ class Inizio extends Initial {
 	 * Use it like this
 	 *
 	 *   	 $image_sizes = array(
-	 *   	 	'default'         => array(
-	 *   	 		'width'  => 125,
-	 *   	 		'height' => 125,
-	 *   	 		'crop'   => true
-	 *   	 	),
 	 *   	 	'inizio-thumb-600' => array(
 	 *   	 		'label'  => __('Inizio Thumb 600', 'iniziotheme'),
 	 *   	 		'width'  => 600,
@@ -255,7 +249,7 @@ class Inizio extends Initial {
 	 * @link   http://codex.wordpress.org/Function_Reference/add_image_size
 	 */
 	
-	public function addImageSizes( $sizes ) {
+	public function addImageSizes( $sizes ) {	
 		$defaults = array(
 			'width'  => 0,
 			'height' => 0,
@@ -264,19 +258,15 @@ class Inizio extends Initial {
 		
 		if ( is_array( $sizes ) ) {
 			$register_image_sizes = function () use ( $sizes ) {
+				add_theme_support( 'post_thumbnails' );
 				$labels = array();
 				
 				foreach ( $sizes as $name => $size ) {
 					$size = wp_parse_args( $size, $defaults );
-					extract( $size, EXTR_SKIP );
-					
-					if ( $name == 'default' ) {
-						set_post_thumbnail_size( $width, $height, $crop );
-					} else {
-						add_image_size( $name, $width, $height, $crop );
-						if ( $label )
-							$labels[$name] = $label;
-					}
+
+					add_image_size( $name, $size['width'], $size['height'], $size['crop'] );
+					if ( $size['label'] )
+						$labels[$name] = $size['label'];
 				}
 				
 				$image_sizes = function ( $sizes ) use ( $labels ) {
@@ -484,6 +474,25 @@ class Inizio extends Initial {
 		};
 		
 		add_action( 'wp_dashboard_setup', $dashboard_widgets );
+	}
+	
+	public function featured_image( $id = false, $class = false, $size = 'medium' ) {
+		global $post;
+		$id = ( $id ) ? $id : $post->ID;
+		
+		if ( has_post_thumbnail( $id ) ) {
+			$html  = ( $class ) ? '<figure class="' . $class . '">' : '<figure>';
+			$html .= get_the_post_thumbnail( $id, $size );
+						
+			if ( $caption = get_post( get_post_thumbnail_id() )->post_excerpt )
+				$html .= '<figcaption>' . $caption . '</figcaption>';
+				
+			$html .= '</figure>';
+			
+			return $html;
+		} else {
+			return false;
+		}
 	}
 
 }
