@@ -249,7 +249,7 @@ class Inizio extends Initial {
 	 * @link   http://codex.wordpress.org/Function_Reference/add_image_size
 	 */
 	
-	public function addImageSizes( $sizes ) {	
+	public function addImageSizes( $sizes ) {
 		$defaults = array(
 			'width'  => 0,
 			'height' => 0,
@@ -476,7 +476,20 @@ class Inizio extends Initial {
 		add_action( 'wp_dashboard_setup', $dashboard_widgets );
 	}
 	
-	public function featured_image( $id = false, $class = false, $size = 'medium' ) {
+	/**
+	 * Featured image
+	 *
+	 * Use this to easily get the featured image of any post.
+	 * It will be formatted with figure and figcaption (if a caption is set for the image).
+	 *
+	 * @param  string/bool  post id or false if in a loop
+	 * @param  string/bool  class to be set on the figure element or false for no class
+	 * @param  string/array the size of the img, can either be a string keyword or a 2-item array representing width and height in pixels
+	 * @return string/bool  html or false if no featured image
+	 * @author Tobias Bleckert <tbleckert@gmail.com>
+	 */
+	 
+	public function featured_image ( $id = false, $class = false, $size = 'medium' ) {
 		global $post;
 		$id = ( $id ) ? $id : $post->ID;
 		
@@ -493,6 +506,42 @@ class Inizio extends Initial {
 		} else {
 			return false;
 		}
+	}
+	
+	/**
+	 * Is mobile?
+	 *
+	 * This functions checks if the user is visiting using a mobile device and 
+	 * returns result in true or false.
+	 *
+	 * @return bool true|false
+	 * @author Muneeb <http://wp-snippets.com/checks-if-the-visitor-is-from-mobile-device/>
+	 */
+	 
+	public function is_mobile () {
+		if ( function_exists( 'wp_is_mobile' ) )
+			return wp_is_mobile();
+		
+		//code from wp_is_mobile function, wp_is_mobile() is located in wp-includes/vars.php version 3.4
+		static $is_mobile;
+		
+		if ( isset($is_mobile) )
+		return $is_mobile;
+		
+		if ( empty($_SERVER['HTTP_USER_AGENT']) ) {
+			$is_mobile = false;
+		} elseif ( strpos($_SERVER['HTTP_USER_AGENT'], 'Mobile') !== false // many mobile devices (all iPhone, iPad, etc.)
+			|| strpos($_SERVER['HTTP_USER_AGENT'], 'Android') !== false
+			|| strpos($_SERVER['HTTP_USER_AGENT'], 'Silk/') !== false
+			|| strpos($_SERVER['HTTP_USER_AGENT'], 'Kindle') !== false
+			|| strpos($_SERVER['HTTP_USER_AGENT'], 'BlackBerry') !== false
+			|| strpos($_SERVER['HTTP_USER_AGENT'], 'Opera Mini') !== false ) {
+			$is_mobile = true;
+		} else {
+			$is_mobile = false;
+		}
+		
+		return $is_mobile;
 	}
 
 }
