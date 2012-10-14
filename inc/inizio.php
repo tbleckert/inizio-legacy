@@ -169,11 +169,16 @@ class Inizio extends Initial {
 					'in_footer' => false,
 					'deps'      => array(),
 					'version'   => false,
-					'media'     => 'all'
+					'media'     => 'all',
+					'fallback'  => false
 				);
 				
 				foreach($assets as $asset) {					
 					$asset = wp_parse_args( $asset, $defaults );
+					
+					if ( $asset['fallback'] && ! @fopen( $asset['src'], 'r' ) ) {
+						$asset['src'] = $asset['fallback'];						
+					}
 					
 					if ($asset['type'] == 'script') {
 						if ($asset['do'] == 'enqueue') {
@@ -188,11 +193,17 @@ class Inizio extends Initial {
 							wp_register_style( $asset['handle'], $asset['src'], $asset['deps'], $asset['version'], $asset['media'] );
 						}
 					}
-				
 				}
 				
 				wp_deregister_script( 'jquery' ); // deregisters the default WordPress jQuery
-				wp_enqueue_script('jquery', 'http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js', false, '1.7.2', true); // register the external file
+				
+				$jquery_url = 'http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js';
+				
+				if ( @fopen($jquery_url, 'r') ) {
+					wp_enqueue_script( 'jquery', $jquery_url, false, '1.8.2', true ); // register the external file
+				} else {
+					wp_enqueue_script( 'jquery', get_bloginfo('template_url') . '/assets/js/libs/jquery.js', false, '1.8.2', true );
+				}
 			}
 		};
 		
@@ -249,15 +260,15 @@ class Inizio extends Initial {
 	 * @link   http://codex.wordpress.org/Function_Reference/add_image_size
 	 */
 	
-	public function addImageSizes( $sizes ) {
-		$defaults = array(
-			'width'  => 0,
-			'height' => 0,
-			'crop'   => false
-		);
-		
+	public function addImageSizes( $sizes ) {		
 		if ( is_array( $sizes ) ) {
 			$register_image_sizes = function () use ( $sizes ) {
+				$defaults = array(
+					'width'  => 0,
+					'height' => 0,
+					'crop'   => false
+				);
+				
 				add_theme_support( 'post_thumbnails' );
 				$labels = array();
 				
@@ -265,7 +276,7 @@ class Inizio extends Initial {
 					$size = wp_parse_args( $size, $defaults );
 
 					add_image_size( $name, $size['width'], $size['height'], $size['crop'] );
-					if ( $size['label'] )
+					if ( isset( $size['label'] ) )
 						$labels[$name] = $size['label'];
 				}
 				
@@ -476,20 +487,7 @@ class Inizio extends Initial {
 		add_action( 'wp_dashboard_setup', $dashboard_widgets );
 	}
 	
-	/**
-	 * Featured image
-	 *
-	 * Use this to easily get the featured image of any post.
-	 * It will be formatted with figure and figcaption (if a caption is set for the image).
-	 *
-	 * @param  string/bool  post id or false if in a loop
-	 * @param  string/bool  class to be set on the figure element or false for no class
-	 * @param  string/array the size of the img, can either be a string keyword or a 2-item array representing width and height in pixels
-	 * @return string/bool  html or false if no featured image
-	 * @author Tobias Bleckert <tbleckert@gmail.com>
-	 */
-	 
-	public function featured_image ( $id = false, $class = false, $size = 'medium' ) {
+	public function featured_image( $id = false, $class = false, $size = 'medium' ) {
 		global $post;
 		$id = ( $id ) ? $id : $post->ID;
 		
@@ -506,42 +504,6 @@ class Inizio extends Initial {
 		} else {
 			return false;
 		}
-	}
-	
-	/**
-	 * Is mobile?
-	 *
-	 * This functions checks if the user is visiting using a mobile device and 
-	 * returns result in true or false.
-	 *
-	 * @return bool true|false
-	 * @author Muneeb <http://wp-snippets.com/checks-if-the-visitor-is-from-mobile-device/>
-	 */
-	 
-	public function is_mobile () {
-		if ( function_exists( 'wp_is_mobile' ) )
-			return wp_is_mobile();
-		
-		//code from wp_is_mobile function, wp_is_mobile() is located in wp-includes/vars.php version 3.4
-		static $is_mobile;
-		
-		if ( isset($is_mobile) )
-		return $is_mobile;
-		
-		if ( empty($_SERVER['HTTP_USER_AGENT']) ) {
-			$is_mobile = false;
-		} elseif ( strpos($_SERVER['HTTP_USER_AGENT'], 'Mobile') !== false // many mobile devices (all iPhone, iPad, etc.)
-			|| strpos($_SERVER['HTTP_USER_AGENT'], 'Android') !== false
-			|| strpos($_SERVER['HTTP_USER_AGENT'], 'Silk/') !== false
-			|| strpos($_SERVER['HTTP_USER_AGENT'], 'Kindle') !== false
-			|| strpos($_SERVER['HTTP_USER_AGENT'], 'BlackBerry') !== false
-			|| strpos($_SERVER['HTTP_USER_AGENT'], 'Opera Mini') !== false ) {
-			$is_mobile = true;
-		} else {
-			$is_mobile = false;
-		}
-		
-		return $is_mobile;
 	}
 
 }

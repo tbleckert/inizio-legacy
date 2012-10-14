@@ -14,7 +14,7 @@ require_once( 'admin/theme-info.php' ); // inizio theme info
 
 define( 'VERSION', time() ); // Change this to your asset version (you can use time() when developing)
 define( 'DOCROOT', TEMPLATEPATH . '/' );
-define( 'WEBROOT', get_bloginfo( 'template_directory' ) . '/' );
+define( 'WEBROOT', get_stylesheet_directory_uri() . '/' );
 define( 'LANG_DOMAIN', 'inizio' ); // Change this to your theme name (in lowercase, separate words via underscores)
 define( 'LOCALE', 'en' ); // You can set this to use a different language than what is set in the admin
 
@@ -54,11 +54,6 @@ Inizio::assets( $assets );
 
 // Thumbnail sizes
 $image_sizes = array(
-	'default'  => array(
-		'width'  => 125,
-		'height' => 125,
-		'crop'   => true
-	),
 	'inizio-thumb-600' => array(
 		'label'  => __( 'Inizio Thumb 600', LANG_DOMAIN ),
 		'width'  => 600,
@@ -125,7 +120,7 @@ $sidebars = array(
 Inizio::addSidebars( $sidebars );
 
 // Customize the login page
-Inizio::customizeLogin( get_stylesheet_directory_uri() . '/admin/assets/css/login.css' );
+Inizio::customizeLogin( WEBROOT . '/admin/assets/css/login.css' );
 
 // Remove a admin menu item
 Inizio::removeFromMenu( 'comments' );
