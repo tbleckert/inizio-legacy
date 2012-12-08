@@ -524,7 +524,8 @@ class Inizio extends Initial {
 		$periods = array( 
 			__( 'second', LANG_DOMAIN ), 
 			__( 'minute', LANG_DOMAIN ), 
-			__( 'hour', LANG_DOMAIN ), 
+			__( 'hour', LANG_DOMAIN ),
+			__( 'day', LANG_DOMAIN ), 
 			__( 'week', LANG_DOMAIN ),
 			__( 'month', LANG_DOMAIN ),
 			__( 'year', LANG_DOMAIN ),
