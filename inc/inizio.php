@@ -505,5 +505,66 @@ class Inizio extends Initial {
 			return false;
 		}
 	}
-
+	
+	/**
+	 * Nice time
+	 *
+	 * Formats the post date to something like "4 hours ago".
+	 *
+	 * @param string post date (get_post_date())
+	 * @author getButterfly <http://getbutterfly.com/nice-date-feature-facebook-style/>
+	 * @author Tobias Bleckert <tbleckert@gmail.com>
+	 */
+	
+	public function niceTime( $date ) {
+		if ( empty( $date ) ) {
+			return __('No date provided', LANG_DOMAIN);
+		}
+		
+		$periods = array( 
+			__( 'second', LANG_DOMAIN ), 
+			__( 'minute', LANG_DOMAIN ), 
+			__( 'hour', LANG_DOMAIN ), 
+			__( 'week', LANG_DOMAIN ),
+			__( 'month', LANG_DOMAIN ),
+			__( 'year', LANG_DOMAIN ),
+			__( 'decade', LANG_DOMAIN )
+		);
+		
+		$lengths = array( 
+			'60',
+			'60',
+			'24',
+			'7',
+			'4.35',
+			'12',
+			'10'
+		);
+		
+		$now  = time();
+		$date = strtotime($date);
+		
+		if ( empty( $date ) )
+			return __( 'Invalid date', LANG_DOMAIN );
+			
+		if ( $now > $date ) {
+			$difference = $now - $date;
+			$tense      = __( 'ago', LANG_DOMAIN );
+		} else {
+			$difference = $date - $now;
+			$tense      = __( 'from now', LANG_DOMAIN );
+		}
+		
+		for ( $j = 0; $difference >= $lengths[$j] && $j < count( $lengths ) - 1; $j++ ) {
+			$difference /= $lengths[$j];
+		}
+		
+		$difference = round( $difference );
+		
+		if ( $difference != 1 ) {
+			$periods[$j] .= __( 's', LANG_DOMAIN );
+		}
+		
+		return "$difference $periods[$j] {$tense}";
+	}
 }
