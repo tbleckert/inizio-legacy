@@ -52,6 +52,10 @@ with the width and height.
 	color: #eee;
 }
 
+#login_error {
+	color: #333;
+}
+
 .login .button-primary,
 .login .button-primary:hover,
 .login .button-primary:active {
