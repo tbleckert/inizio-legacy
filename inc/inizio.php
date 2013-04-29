@@ -211,6 +211,37 @@ class Inizio extends Initial {
 	}
 	
 	/**
+	 * Enqueue assets
+	 *
+	 * Helps you enqueue page specific styles or scripts.
+	 *
+	 *     $assets = array(
+	 *       'stylehandle'  => 'style',
+	 *       'scripthandle' => 'script'
+	 *     );
+	 *
+	 *     Inizio::enqueueAssets( $assets );
+	 *
+	 * @param  array
+	 * @author Tobias Bleckert <tbleckert@gmail.com>
+	 * @link   http://codex.wordpress.org/Function_Reference/register_nav_menus
+	 */
+	 
+	public function enqueueAssets( $assets ) {
+		$addAsset = function () use ($assets) {
+			foreach ($assets as $asset => $type) {
+				if ($type == 'style') {
+					wp_enqueue_style( $asset );
+				} else {
+					wp_enqueue_style( $script );
+				}
+			}
+		};
+		
+		add_action('wp_enqueue_scripts', $addAsset, 999);
+	}
+	
+	/**
 	 * Add menus
 	 *
 	 * A simple function to simplify adding menus.
@@ -566,6 +597,6 @@ class Inizio extends Initial {
 			$periods[$j] .= __( 's', LANG_DOMAIN );
 		}
 		
-		return "$difference $periods[$j] {$tense}";
+		return "{$difference} $periods[$j] {$tense}";
 	}
 }
