@@ -1,0 +1,105 @@
+/******************************************************************
+ *Inizio Custom Login Stylesheet
+ *
+ *Designed by Tobias Bleckert
+ *
+ *This stylesheet is loaded (if admin.php is setup in your 
+ *functions file) on the login page. This way you can style 
+ *the login page. It won't affect any other page, admin or front-end.
+ *
+ *For more info, check out the codex:
+ *http://codex.wordpress.org/Creating_Admin_Themes
+ *
+ ******************************************************************
+
+/* Background by Claude Meri <http://dribbble.com/shots/471331-Inline-Login-Form>
+
+body.login
+  background: #aeaeae inline-image('login-bg.png') repeat
+
+#login
+  h1 a
+    background: inline-image('login-logo.png') no-repeat center top
+    /* make sure to replace this!
+    width: 320px
+    height: 112px
+    text-indent: -9999px
+    overflow: hidden
+    padding-bottom: 15px
+    display: block
+  form
+    margin: 0
+    padding: 0
+    font-weight: normal
+    background: transparent
+    box-shadow: none
+    border: none
+    overflow: hidden
+
+/* the form box
+
+/*
+ *This is the Wordpress logo in the admin area.
+ *You'll have to load your own images and mess
+ *with the width and height.
+
+#login_error, .login .message
+  margin: 0 0 16px
+  padding: 10px
+  box-shadow: inset 0 1px 2px black, 0 1px 1px rgba(255, 255, 255, 0.2)
+  border: none
+  background: #837c20
+  color: #eee
+
+#login_error
+  color: #333
+
+.login
+  .button-primary
+    background: #9cc72f
+    background: -moz-linear-gradient(top, #9cc72f 0%, #88b330 50%, #709f15 51%, #61900c 100%)
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #9cc72f), color-stop(50%, #88b330), color-stop(51%, #709f15), color-stop(100%, #61900c))
+    background: -webkit-linear-gradient(top, #9cc72f 0%, #88b330 50%, #709f15 51%, #61900c 100%)
+    background: -o-linear-gradient(top, #9cc72f 0%, #88b330 50%, #709f15 51%, #61900c 100%)
+    background: -ms-linear-gradient(top, #9cc72f 0%, #88b330 50%, #709f15 51%, #61900c 100%)
+    background: linear-gradient(to bottom, #9cc72f 0%, #88b330 50%, #709f15 51%, #61900c 100%)
+    border-radius: 3px
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.2), 0 1px 4px rgba(0, 0, 0, 0.5)
+    border: none
+    font-weight: normal
+    color: #fff
+    margin-bottom: 5px
+    &:hover, &:active
+      background: #9cc72f
+      background: -moz-linear-gradient(top, #9cc72f 0%, #88b330 50%, #709f15 51%, #61900c 100%)
+      background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #9cc72f), color-stop(50%, #88b330), color-stop(51%, #709f15), color-stop(100%, #61900c))
+      background: -webkit-linear-gradient(top, #9cc72f 0%, #88b330 50%, #709f15 51%, #61900c 100%)
+      background: -o-linear-gradient(top, #9cc72f 0%, #88b330 50%, #709f15 51%, #61900c 100%)
+      background: -ms-linear-gradient(top, #9cc72f 0%, #88b330 50%, #709f15 51%, #61900c 100%)
+      background: linear-gradient(to bottom, #9cc72f 0%, #88b330 50%, #709f15 51%, #61900c 100%)
+      border-radius: 3px
+      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.2), 0 1px 4px rgba(0, 0, 0, 0.5)
+      border: none
+      font-weight: normal
+      color: #fff
+      margin-bottom: 5px
+  #nav, #backtoblog
+    margin: 0
+    padding-left: 0
+  #nav
+    float: right
+    padding-right: 0
+  label, #nav a, #backtoblog a
+    color: #fff !important
+    text-shadow: none
+  form .input, input[type="text"]
+    background: #232326
+    font-size: 12px
+    padding: 10px
+    border: none
+    box-shadow: inset 0 1px 2px black, 0 1px 1px rgba(255, 255, 255, 0.2)
+    color: #eee
+
+input:-webkit-autofill
+  background-color: #232326 !important
+  box-shadow: inset 0 1px 2px black, inset 0 0 5px #faffbd, 0 1px 1px rgba(255, 255, 255, 0.2)
