@@ -3,6 +3,26 @@
 Inizio is a wordpress theme starting point. It was originally built by [eddiemachado](https://github.com/eddiemachado/bones).
 He did a great job with Bones, but I wanted it more stripped out, I wanted just the bones, no flesh.
 
+![Logo](https://dl.dropboxusercontent.com/u/6306766/inizio.png)
+
+## Screenshots
+
+![Screenshot](https://dl.dropboxusercontent.com/u/6306766/inizio_login.png)
+
+## Features
+
+* Shortcuts for many Wordpress functions
+* Easy page specific assets
+* Pagination helper
+* Handler to remove items from the admin menu
+* Limit text by words
+* Handler to hide stuff from the sidebar
+* Facebook-like time (1 minute ago)
+* Widget helper to make it easier to create widgets
+* Custom post type helper
+* Language link manager
+* And lots of other improvements like cleaner code, sass support, custom login etc...
+
 ## Get started ##
 
 I've provided you with some example files, be sure to check them out and read the comments. So let me walk you through the theme structure:
