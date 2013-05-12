@@ -77,7 +77,11 @@ class Inizio extends Initial {
 	
 	public function info() {
 		$register_theme_info_menu_page = function () {
-			add_menu_page( 'Inizio theme info', 'Inizio', 'manage_options', 'admin/theme-info.php', '', get_template_directory_uri() . '/admin/assets/img/icons/information.png', 61 );
+			$content = function () {
+				include( TEMPLATEPATH . '/admin/theme-info.php' );
+			};
+		
+			add_menu_page( 'Inizio theme info', 'Inizio', 'manage_options', 'theme-info.php', $content, get_template_directory_uri() . '/admin/assets/img/icons/information.png', 61 );
 		};
 		
 		add_action( 'admin_menu', $register_theme_info_menu_page );
