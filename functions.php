@@ -19,6 +19,9 @@ define( 'LOCALE', 'en' ); // You can set this to use a different language than w
 
 Inizio::init();
 
+// You can remove this if you want to
+Inizio::info();
+
 $assets = array(
 	array(
 		'do'      => 'enqueue',
