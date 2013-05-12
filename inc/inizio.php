@@ -380,8 +380,8 @@ class Inizio extends Initial {
 			'format'    => '',
 			'total'     => $wp_query->max_num_pages,
 			'current'   => $current,
-			'prev_text' => __( $prev, 'inizio' ),
-			'next_text' => __( $next, 'inizio' ),
+			'prev_text' => $prev,
+			'next_text' => $next,
 			'type'      => 'plain'
 		);
 		
@@ -573,7 +573,7 @@ class Inizio extends Initial {
 			'10'
 		);
 		
-		$now  = time();
+		$now  = strtotime(date_i18n('Y-m-d H:i:s'));
 		$date = strtotime($date);
 		
 		if ( empty( $date ) )
