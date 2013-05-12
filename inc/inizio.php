@@ -75,6 +75,16 @@ class Inizio extends Initial {
 		add_filter( 'the_content', array( 'Inizio', 'filter_ptags_on_images' ) );
 	}
 	
+	/**
+	 * Theme Info
+	 *
+	 * Adds a menu page that shows some information about the theme.
+	 * Call it like this: Inizio::info()
+	 *
+	 * @author Tobias Bleckert <tbleckert@gmail.com>
+	 * @link   http://codex.wordpress.org/Function_Reference/add_menu_page
+	 */
+	
 	public function info() {
 		$register_theme_info_menu_page = function () {
 			$content = function () {
