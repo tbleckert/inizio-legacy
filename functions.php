@@ -36,7 +36,7 @@ $assets = array(
 		'do'      => 'enqueue',
 		'type'    => 'style',
 		'handle'  => 'inizio-stylesheet',
-		'src'     => WEBROOT . 'assets/css/style.css',
+		'src'     => WEBROOT . 'assets/css/inizio.css',
 		'deps'    => false,
 		'version' => VERSION
 	),
@@ -112,10 +112,10 @@ $sidebars = array(
 		'id'            => 'sidebar1',
 		'name'          => __( 'Sidebar 1', LANG_DOMAIN ),
 		'description'   => __( 'The first (primary) sidebar.', LANG_DOMAIN ),
-		'before_widget' => '<div id="%1$s" class="widget %2$s">',
-		'after_widget'  => '</div>',
-		'before_title'  => '<h4 class="widgettitle">',
-		'after_title'   => '</h4>',
+		'before_widget' => '<article id="%1$s" class="widget %2$s">',
+		'after_widget'  => '</article>',
+		'before_title'  => '<h1 class="widgettitle">',
+		'after_title'   => '</h1>',
 	)
 );
 

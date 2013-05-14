@@ -595,8 +595,8 @@ class Inizio extends Initial {
 			'10'
 		);
 		
-		$now  = strtotime(date_i18n('Y-m-d H:i:s'));
-		$date = strtotime($date);
+		$now  = strtotime( date_i18n( 'Y-m-d H:i:s' ) );
+		$date = strtotime( $date );
 		
 		if ( empty( $date ) )
 			return __( 'Invalid date', LANG_DOMAIN );
