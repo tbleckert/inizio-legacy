@@ -7,15 +7,17 @@ This theme was forked from Eddie Machado (https://github.com/eddiemachado/bones)
 and now updated to fit my needs and hopefully yours.
 */
 
-/* Include files */
-require_once( 'inc/inizio.php' ); // required
-require_once( 'inc/custom-post-type.php' ); // custom post type example
-
+// Useful stuff
 define( 'VERSION', time() ); // Change this to your asset version (you can use time() when developing)
 define( 'DOCROOT', TEMPLATEPATH . '/' );
 define( 'WEBROOT', get_stylesheet_directory_uri() . '/' );
 define( 'LANG_DOMAIN', 'inizio' ); // Change this to your theme name (in lowercase, separate words via underscores)
 define( 'LOCALE', 'en' ); // You can set this to use a different language than what is set in the admin
+
+/* Include files */
+require_once( 'inc/inizio.php' ); // required
+require_once( 'inc/custom-post-type.php' ); // custom post type example
+require_once( 'inc/meta-boxes.php' ); // Admin meta boxes
 
 Inizio::init();
 
