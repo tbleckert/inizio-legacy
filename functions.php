@@ -24,6 +24,9 @@ Inizio::init();
 // You can remove this if you want to
 Inizio::info();
 
+// Enable art directed posts/pages
+Inizio::artDirectedPosts();
+
 $assets = array(
 	array(
 		'do'      => 'enqueue',

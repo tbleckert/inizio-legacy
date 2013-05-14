@@ -1,0 +1,2 @@
+<input type="hidden" name="custom_js_meta_box_nonce" value="<?php echo wp_create_nonce('custom_js_meta_box'); ?>" />
+<textarea name="_custom-js" id="custom_js_textarea"><?php echo get_post_meta( $_GET['post'], '_custom-js', true ); ?></textarea>
