@@ -34,7 +34,7 @@ function register_custom_post_example() {
 				'new_item'           => __('New Article', LANG_DOMAIN), /* New Display Title */
 				'view_item'          => __('View Article', LANG_DOMAIN), /* View Display Title */
 				'search_items'       => __('Search Article', LANG_DOMAIN), /* Search Custom Type Title */ 
-				'not_found'          =>  __('Nothing found in the Database.', LANG_DOMAIN), /* This displays if there are no entries yet */ 
+				'not_found'          => __('Nothing found in the Database.', LANG_DOMAIN), /* This displays if there are no entries yet */ 
 				'not_found_in_trash' => __('Nothing found in Trash', LANG_DOMAIN), /* This displays if there is nothing in the trash */
 				'parent_item_colon'  => ''
 			),
