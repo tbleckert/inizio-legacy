@@ -91,10 +91,20 @@ class Inizio extends Initial {
 				include( TEMPLATEPATH . '/admin/theme-info.php' );
 			};
 		
-			add_menu_page( 'Inizio theme info', 'Inizio', 'manage_options', 'theme-info.php', $content, get_template_directory_uri() . '/admin/assets/img/icons/information.png', 61 );
+			add_menu_page( 'Inizio theme info', 'Inizio', 'manage_options', 'theme-info.php', false, 'div', 61 );
 		};
 		
 		add_action( 'admin_menu', $register_theme_info_menu_page );
+		
+		// Theme info icon
+		$themeinfo_icon = function () { ?>
+			<style type="text/css" media="screen">
+					#toplevel_page_theme-info .wp-menu-image { background: url(<?php echo get_stylesheet_directory_uri() . '/admin/assets/img/icons/information.png' ?>) no-repeat 6px -17px !important; }
+					#toplevel_page_theme-info:hover .wp-menu-image, #toplevel_page_theme-info.wp-has-current-submenu .wp-menu-image { background-position:6px 7px!important; }
+			</style>
+		<?php };
+		
+		add_action( 'admin_head', $themeinfo_icon );
 	}
 	
 	public function artDirectedPosts() {
