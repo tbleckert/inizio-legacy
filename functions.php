@@ -27,6 +27,9 @@ Inizio::info();
 // Enable art directed posts/pages
 Inizio::artDirectedPosts();
 
+// Enable "language slug"
+Inizio::languageSlug();
+
 $assets = array(
 	array(
 		'do'      => 'enqueue',

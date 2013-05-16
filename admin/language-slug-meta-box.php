@@ -1,0 +1,2 @@
+<input type="hidden" name="language_slug_meta_box_nonce" value="<?php echo wp_create_nonce( 'language_slug_meta_box' ); ?>" />
+<input type="text" name="_language_slug" class="widefat" value="<?php echo get_post_meta( $post->ID, '_language_slug', true ); ?>" autocomplete="off">

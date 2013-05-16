@@ -244,6 +244,87 @@ class Inizio extends Initial {
 	}
 	
 	/**
+	 * Language slug
+	 *
+	 * If you use a Network to handle a multisite, then
+	 * this module is for you. A language slug is a value that
+	 * connects pages througout your network.
+	 * Let's say you have a About page. On another language it
+	 * will be called something else, and the slug will to.
+	 * So, set the language slug on every About page to about
+	 * and you can easily get it in your templates with
+	 * Inizio::get_page_by_slug( 'about' )
+	 *
+	 * Call it like this: Inizio::languageSlug()
+	 *
+	 * @author Tobias Bleckert <tbleckert@gmail.com>
+	 * @link   http://codex.wordpress.org/Function_Reference/add_meta_boxes
+	 */
+	
+	public function languageSlug () {
+		// Language slug
+		$add_language_slug_box = function () {
+			$language_slug_inside = function ( $post ) {
+			  include( DOCROOT . 'admin/language-slug-meta-box.php' );
+			};
+		
+		  add_meta_box('language-slug-meta-box', __( 'Language slug', LANG_DOMAIN ), $language_slug_inside, 'page', 'side', 'high');
+		};
+		
+		add_action('add_meta_boxes', $add_language_slug_box );
+		
+		$save_language_slug = function ( $post_id ) {
+		  if ( ! isset( $_POST['language_slug_meta_box_nonce'] ) || ! wp_verify_nonce( $_POST['language_slug_meta_box_nonce'], 'language_slug_meta_box' ) ) {
+		    return $post_id;
+		  }
+		  
+		  // check capabilities
+		  if ( 'post' == $_POST['post_type'] ) {
+		    if ( ! current_user_can( 'edit_post', $post_id ) ) {
+		      return $post_id;
+		    }
+		  } elseif ( ! current_user_can( 'edit_page', $post_id ) ) {
+		    return $post_id;
+		  }
+		  
+		  // exit on autosave
+		  if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE ) {
+		    return $post_id;
+		  }
+		  
+		  if ( isset( $_POST['_language_slug'] ) ) {
+		    update_post_meta( $post_id, '_language_slug', $_POST['_language_slug'] );
+		  } else {
+		    delete_post_meta( $post_id, '_language_slug' );
+		  }
+		};
+		
+		add_action( 'save_post', $save_language_slug );
+	}
+	
+	public function get_page_by_slug( $slug ) {
+		if ( $slug ) {
+			$page = get_pages( array(
+				'number'     => 1,
+				'meta_key'   => 'network-slug',
+				'meta_value' => $slug
+			) );
+		
+			if ( $page ) {
+				return $page[0];
+			} else {
+				if ( is_numeric( $slug ) ) {
+					return get_page( $slug );
+				} else {
+					return get_page_by_path( $slug );
+				}
+			}
+		} else {
+			return false;
+		}
+	}
+	
+	/**
 	 * Theme Support
 	 *
 	 * A handy wrapper to add theme supports via add_theme_support
