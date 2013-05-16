@@ -324,6 +324,11 @@ class Inizio extends Initial {
 		}
 	}
 	
+	public function currentBlog() {
+		global $blog_id;
+		return $blog_id;
+	}
+	
 	/**
 	 * Theme Support
 	 *
