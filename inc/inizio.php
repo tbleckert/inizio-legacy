@@ -107,6 +107,22 @@ class Inizio extends Initial {
 		add_action( 'admin_head', $themeinfo_icon );
 	}
 	
+	/**
+	 * Art directed post
+	 *
+	 * With art directed posts enabled you get the ability to
+	 * add custom css and javascript to your posts and pages.
+	 *
+	 * This adds two meta boxes to the post/page page with syntax highlighting.
+	 * Your custom css and js will kick in att single posts and pages.
+	 * It will also show on the index page if you have set the blog to list only 1 post per page.
+	 *
+	 * Call it like this: Inizio::artDirectedPosts()
+	 *
+	 * @author Tobias Bleckert <tbleckert@gmail.com>
+	 * @link   http://codex.wordpress.org/Function_Reference/add_meta_boxes
+	 */
+	
 	public function artDirectedPosts() {
 		// Add custom CSS if it's a single post or page, or if the posts per page count is 1
 		$addCustomCSS = function () {
